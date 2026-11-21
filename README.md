@@ -33,7 +33,6 @@
 - 🌍 English README: [README.en.md](README.en.md)
 - 📘 English getting-started guide: [docs/GettingStarted-EN.md](docs/GettingStarted-EN.md)
 - 🏗 架构与数据流（角色分工 / 我们改了哪些程序 / 看门狗设计）: [docs/架构与数据流.md](docs/架构与数据流.md)
-- 📣 发布文案模板（B 站/小红书/酷安/Reddit/HN）: [docs/发布文案模板.md](docs/发布文案模板.md)
 - 🏗 English architecture: [docs/Architecture-EN.md](docs/Architecture-EN.md)
 - 🔒 安全策略: [SECURITY.md](SECURITY.md)
 - 🤝 行为准则: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)

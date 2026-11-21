@@ -1,16 +1,16 @@
 # Getting Started: Home Assistant on an Android TV box (beginner friendly)
 
-> Works with **any** Android TV box / old Android phone that can run Termux 鈥?**no root, no custom firmware**.
+> Works with **any** Android TV box / old Android phone that can run Termux — **no root, no custom firmware**.
 > Goal: turn the box into a 24/7 Home Assistant server and control **Midea / Haier** appliances with
 > **Xiaoai** voice commands.
 >
-> How to read: follow top to bottom. Every step has a **verify** command 鈥?do not continue until it passes.
+> How to read: follow top to bottom. Every step has a **verify** command — do not continue until it passes.
 
 ---
 
 ## 0.0 Architecture at a glance (5 min, recommended)
 
-Main path: **voice 鈫?Mi Home 鈫?Bemfa Cloud 鈫?Home Assistant 鈫?integration 鈫?appliance**
+Main path: **voice → Mi Home → Bemfa Cloud → Home Assistant → integration → appliance**
 
 ```mermaid
 flowchart LR
@@ -29,7 +29,7 @@ flowchart LR
 |---|---|---|
 | Xiaoai | speech recognition, intent, TTS | store device state, talk to Midea directly |
 | Mi Home | device list, rooms, voice routing | execute control logic |
-| Bemfa Cloud | HA 鈫?Mi Home device shadow bridge | automation; **device name length is limited** |
+| Bemfa Cloud | HA ↔ Mi Home device shadow bridge | automation; **device name length is limited** |
 | Home Assistant | state machine, control, automation, bridge | speech recognition |
 | Android box | runs Termux + HA process | 2 GB / 32-bit / eMMC are the real constraints |
 | Integrations | protocol translation (Midea/Haier/Bemfa) | guarantee every model works |
@@ -44,13 +44,13 @@ flowchart LR
 
 | Item | Target | How to check |
 |---|---|---|
-| Android | **7.0+** | Settings 鈫?About |
+| Android | **7.0+** | Settings → About |
 | CPU | `armv7l` (32-bit) or `aarch64` (64-bit) | `uname -m` in Termux |
-| RAM | **鈮?2 GB** (1 GB is painful) | `free -m` |
-| Storage | **鈮?3 GB free** | `df -h /data` |
-| Root | **not required** | 鈥?|
+| RAM | **≥ 2 GB** (1 GB is painful) | `free -m` |
+| Storage | **≥ 3 GB free** | `df -h /data` |
+| Root | **not required** | — |
 
-> 鈿狅笍 32-bit boxes are "hard mode": many Python packages have no prebuilt wheels and would need Rust.
+> ⚠️ 32-bit boxes are "hard mode": many Python packages have no prebuilt wheels and would need Rust.
 > This guide ships **pure-Python shims** (`scripts/shims-32bit.py`) that already solve that.
 
 ---
@@ -60,8 +60,8 @@ flowchart LR
 1. On the box browser open Termux releases:
    `https://github.com/termux/termux-app/releases`
 2. Download the **debug** APK matching your ABI:
-   - 32-bit 鈫?`termux-app_vX.Y.Z+apt-android-7-github-debug_armeabi-v7a.apk`
-   - 64-bit 鈫?`..._arm64-v8a.apk`
+   - 32-bit → `termux-app_vX.Y.Z+apt-android-7-github-debug_armeabi-v7a.apk`
+   - 64-bit → `..._arm64-v8a.apk`
 3. Also install **Termux:Boot** (for auto-start on power on).
 4. Install both APKs (allow unknown sources).
 
@@ -87,7 +87,7 @@ pkg install -y python python-pip clang make pkg-config openssl libffi \
 termux-wake-lock
 ```
 
-Also: Settings 鈫?Apps 鈫?Termux 鈫?Battery 鈫?**allow background / no optimization**.
+Also: Settings → Apps → Termux → Battery → **allow background / no optimization**.
 
 **Verify**:
 ```bash
@@ -138,7 +138,7 @@ pip install homeassistant
 hass --version     # e.g. 2026.11.1
 ```
 
-> On a 2 GB box this takes **20鈥?0 minutes**. Run it inside `tmux` so a network drop does not kill it:
+> On a 2 GB box this takes **20–40 minutes**. Run it inside `tmux` so a network drop does not kill it:
 > `tmux new -s install`.
 
 ### 4.4 Patch the Android platform check
@@ -194,8 +194,8 @@ nohup sh ~/start-ha.sh >/dev/null 2>&1 &
 tail -f ~/ha.log      # wait for "Home Assistant initialized"
 ```
 
-> **Do NOT** enable `default_config:` 鈥?it pulls in Bluetooth/voice/media components that are too heavy for 2 GB.
-> **Do NOT** enable `recorder:` 鈥?SQLite on eMMC is extremely slow and is the usual reason a restart takes minutes.
+> **Do NOT** enable `default_config:` — it pulls in Bluetooth/voice/media components that are too heavy for 2 GB.
+> **Do NOT** enable `recorder:` — SQLite on eMMC is extremely slow and is the usual reason a restart takes minutes.
 
 **Verify**: open `http://<BOX_IP>:8123` on your PC, finish onboarding, create an account.
 
@@ -223,8 +223,8 @@ Tested integrations:
 |---|---|
 | `midea_ac_lan` | Midea LAN-direct (AC / dishwasher / water heater / washer) |
 | `haier` | Haier Smart Home |
-| `xiaomi_miot` | Xiaomi devices (optional 鈥?Xiaoai controls them natively) |
-| `bemfa_cloud` | HA 鈫?Bemfa Cloud 鈫?Mi Home 鈫?Xiaoai bridge |
+| `xiaomi_miot` | Xiaomi devices (optional — Xiaoai controls them natively) |
+| `bemfa_cloud` | HA → Bemfa Cloud → Mi Home → Xiaoai bridge |
 
 > Midea owners: the D9 washer-dryer combo has an upstream bug (no entities are created).
 > Fix with `scripts/patch-midea-d9-default.py`.
@@ -233,13 +233,13 @@ Tested integrations:
 
 ## 7. Xiaoai voice control (Bemfa Cloud bridge)
 
-Path: `HA devices 鈫?Bemfa Cloud 鈫?Mi Home "other platform devices" 鈫?Xiaoai`
+Path: `HA devices → Bemfa Cloud → Mi Home "other platform devices" → Xiaoai`
 
 1. Register at `https://cloud.bemfa.com`, copy your **private key / UID**;
-2. In HA: Settings 鈫?Devices & Services 鈫?Add Integration 鈫?**Bemfa Cloud** 鈫?key mode 鈫?paste UID;
+2. In HA: Settings → Devices & Services → Add Integration → **Bemfa Cloud** → key mode → paste UID;
 3. Select the entities to sync. **Keep names short** (Bemfa DB column is limited, ~20 chars);
-4. Mi Home App 鈫?Me 鈫?Other platform devices 鈫?Add 鈫?**Bemfa** 鈫?log in with the Bemfa account;
-5. In Mi Home, open each device 鈫?Settings 鈫?**Room**; Xiaoai can control it afterwards.
+4. Mi Home App → Me → Other platform devices → Add → **Bemfa** → log in with the Bemfa account;
+5. In Mi Home, open each device → Settings → **Room**; Xiaoai can control it afterwards.
 
 **What Xiaoai understands**: fixed commands (on/off, AC temperature/mode); it does **not** support
 open questions like "how is the dishwasher now". Sensor topics only support temperature/humidity/on-off queries.
@@ -254,7 +254,7 @@ open questions like "how is the dishwasher now". Sensor topics only support temp
 |---|---|
 | Auto-restart on crash | `termux-services` + runit service (`scripts/stability/runit-setup.sh`) |
 | Backups | `scripts/stability/backup-ha.sh` keeps the newest 4 archives |
-| Log rotation | `logrotate` rule 5 MB 脳 3 with `copytruncate` |
+| Log rotation | `logrotate` rule 5 MB × 3 with `copytruncate` |
 | Pin versions | `apt-mark hold python python-pip` (prevents `pkg upgrade` from breaking the venv) |
 | Rollback | `scripts/stability/rollback.sh` (dry-run by default) |
 | Self-test | `scripts/stability/selftest.sh` (11 checks) |
@@ -273,7 +273,7 @@ sv-enable hass
 sv status hass
 ```
 
-**Verify**: `kill -9` the HA process 鈫?the web UI should come back within ~30 seconds.
+**Verify**: `kill -9` the HA process → the web UI should come back within ~30 seconds.
 
 ---
 
@@ -291,7 +291,7 @@ sv-enable sshd
 ssh -p 8022 u0_a37@<BOX_IP>
 ```
 
-> TV boxes usually have **no Ethernet port** 鈥?that is normal.
+> TV boxes usually have **no Ethernet port** — that is normal.
 > If you want wired networking, use a **USB-to-RJ45 adapter** (RTL8152/RTL8153 chip);
 > after plugging it in, `ifconfig eth0` should show an IP.
 
@@ -313,18 +313,18 @@ ssh -p 8022 u0_a37@<BOX_IP>
 | Startup takes minutes | `recorder` / `default_config` | disable both |
 | Box drops offline every ~15 min | 2 GB memory pressure / 2.4 GHz Wi-Fi | disable TV apps, DHCP reservation, fixed channel, USB NIC |
 | Mi Home does not show Bemfa devices | names too long / not rebound | shorten entity names, re-save Bemfa config, unbind/rebind Mi Home |
-| `v_name too long` in Bemfa | device name too long | rename entities (鈮?0 chars) |
+| `v_name too long` in Bemfa | device name too long | rename entities (≤20 chars) |
 | iPhone companion app cannot connect | `mobile_app` blocked by `cloud` dependency | remove `cloud` from mobile_app `after_dependencies` |
-| Midea cloud risk control | too many logins in a short time | batch token retrieval; wait 12鈥?4 h |
+| Midea cloud risk control | too many logins in a short time | batch token retrieval; wait 12–24 h |
 | Out of memory | too many entities | disable unused entities/integrations (target <120) |
 
 ---
 
 ## 11. Safety & compliance
 
-- No root, no custom firmware 鈥?keep the device recoverable;
+- No root, no custom firmware — keep the device recoverable;
 - Never commit keys/passwords/UIDs to GitHub;
-- Keep SSH on the LAN only 鈥?do not expose it to the internet;
+- Keep SSH on the LAN only — do not expose it to the internet;
 - Respect the user agreements of third-party apps/clouds; this project is for personal LAN integration only.
 
 ---
@@ -333,8 +333,8 @@ ssh -p 8022 u0_a37@<BOX_IP>
 
 | Metric | Value |
 |---|---|
-| HA startup | 40鈥?0 s (after optimization) |
-| RAM usage | 1.0鈥?.5 GB (including system) |
+| HA startup | 40–90 s (after optimization) |
+| RAM usage | 1.0–1.5 GB (including system) |
 | Entities | < 120 for stability |
 | Uptime | 5+ days tested (with runit supervision) |
 
@@ -350,7 +350,7 @@ tail -n 100 ~/ha.log              # recent errors (most important)
 # what you ran, what you expected, what actually happened
 ```
 
-> 鈿狅笍 Remove IPs, MACs, accounts, passwords, tokens, Bemfa UID and serial numbers before posting.
+> ⚠️ Remove IPs, MACs, accounts, passwords, tokens, Bemfa UID and serial numbers before posting.
 
 ## 14. Where to ask for help
 
@@ -358,7 +358,7 @@ tail -n 100 ~/ha.log              # recent errors (most important)
 |---|---|
 | This repo's **Issues** | install/compatibility questions |
 | Home Assistant community forum | HA itself |
-| **AI assistants** (DeepSeek / ChatGPT / Claude / **DSH 鈥?DeepSeek Harness**) | explain commands, read errors, give the next command |
+| **AI assistants** (DeepSeek / ChatGPT / Claude / **DSH – DeepSeek Harness**) | explain commands, read errors, give the next command |
 
 ### AI prompt template (copy & fill in)
 
@@ -371,4 +371,5 @@ Please give me the next commands one at a time, explain each, and verify my envi
 first. This is Termux on Android, not a normal Linux distro.
 ```
 
-> This project was built and debugged with **DSH (DeepSeek Harness)** as an AI coding agent 鈥?> you can use the same approach to speed up your own installation.
+> This project was built and debugged with **DSH (DeepSeek Harness)** as an AI coding agent —
+> you can use the same approach to speed up your own installation.

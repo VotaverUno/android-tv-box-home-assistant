@@ -36,7 +36,7 @@ flowchart LR
 | Our scripts | shims / patches / supervision | modify firmware, bypass paid features |
 
 > Full version (sequence diagrams, **what we patched**, **watchdog design**):
-> [架构与数据流.md](架构与数据流.md) (Chinese)
+> English: [Architecture-EN.md](Architecture-EN.md) ｜ 中文: [架构与数据流.md](架构与数据流.md)
 
 ---
 
@@ -125,7 +125,7 @@ HA requirements `orjson / ulid-transform / fnv-hash-fast / uv` have no armv7 whe
 Use the shims instead of compiling Rust:
 
 ```bash
-curl -O https://raw.githubusercontent.com/VotaverUno/android-tv-box-home-assistant/scripts/shims-32bit.py
+curl -O https://raw.githubusercontent.com/<YOUR_REPO>/scripts/shims-32bit.py
 ~/ha-venv/bin/python shims-32bit.py
 ```
 
@@ -146,14 +146,14 @@ hass --version     # e.g. 2026.11.1
 HA refuses to start on `sys.platform == "android"`:
 
 ```bash
-curl -O https://raw.githubusercontent.com/VotaverUno/android-tv-box-home-assistant/scripts/patch-android-platform.py
+curl -O https://raw.githubusercontent.com/<YOUR_REPO>/scripts/patch-android-platform.py
 ~/ha-venv/bin/python patch-android-platform.py
 ```
 
 ### 4.5 Fix Android DNS (otherwise all cloud logins fail)
 
 ```bash
-curl -O https://raw.githubusercontent.com/VotaverUno/android-tv-box-home-assistant/scripts/sitecustomize.py
+curl -O https://raw.githubusercontent.com/<YOUR_REPO>/scripts/sitecustomize.py
 cp sitecustomize.py ~/ha-venv/lib/python3.*/site-packages/sitecustomize.py
 ```
 

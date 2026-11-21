@@ -1,4 +1,4 @@
-﻿# Getting Started: Home Assistant on an Android TV box (beginner friendly)
+# Getting Started: Home Assistant on an Android TV box (beginner friendly)
 
 > Works with **any** Android TV box / old Android phone that can run Termux 鈥?**no root, no custom firmware**.
 > Goal: turn the box into a 24/7 Home Assistant server and control **Midea / Haier** appliances with
@@ -36,7 +36,7 @@ flowchart LR
 | Our scripts | shims / patches / supervision | modify firmware, bypass paid features |
 
 > Full version (sequence diagrams, **what we patched**, **watchdog design**):
-> [鏋舵瀯涓庢暟鎹祦.md](鏋舵瀯涓庢暟鎹祦.md) (Chinese)
+> [架构与数据流.md](架构与数据流.md) (Chinese)
 
 ---
 

@@ -1,5 +1,11 @@
 # 旧安卓电视盒子跑 Home Assistant + 小爱语音控制美的/海尔（免刷机、免 root）
 
+[![Release](https://img.shields.io/github/v/release/VotaverUno/android-tv-box-home-assistant?color=blue)](https://github.com/VotaverUno/android-tv-box-home-assistant/releases)
+[![Stars](https://img.shields.io/github/stars/VotaverUno/android-tv-box-home-assistant?style=social)](https://github.com/VotaverUno/android-tv-box-home-assistant/stargazers)
+[![License](https://img.shields.io/github/license/VotaverUno/android-tv-box-home-assistant)](LICENSE)
+![Platform](https://img.shields.io/badge/platform-armv7%20%7C%20arm64-lightgrey)
+![HA](https://img.shields.io/badge/Home%20Assistant-2026.11.1-blue)
+
 把闲置的 **安卓电视盒子**（小米盒子 / 运营商盒子 / 各种 Android TV Box）
 变成一个 7×24 小时的 Home Assistant 服务器，并通过 **巴法云 → 米家 → 小爱同学**
 实现语音控制 **美的 / 海尔** 等米家接不进来的家电。
@@ -29,6 +35,8 @@
 - 📘 **[教程：安卓盒子从零安装 Home Assistant（小白版）](docs/教程-安卓盒子装HomeAssistant.md)** ← 从这里开始
 - 🧰 `scripts/`：可直接复用的脚本（32 位垫片、DNS 补丁、平台补丁、备份/自检/回滚、美的 D9 补丁、巴法云工具）
 - 🩺 故障排查表：教程最后一章（16+ 条真实踩坑）
+- 🧾 盒子型号适配表：[docs/盒子型号适配表.md](docs/盒子型号适配表.md)
+- 📝 更新日志：[CHANGELOG.md](CHANGELOG.md)
 - 🌍 English README: [README.en.md](README.en.md)
 - 📘 English getting-started guide: [docs/GettingStarted-EN.md](docs/GettingStarted-EN.md)
 - 🏗 架构与数据流（角色分工 / 我们改了哪些程序 / 看门狗设计）: [docs/架构与数据流.md](docs/架构与数据流.md)

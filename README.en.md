@@ -1,5 +1,11 @@
 # Home Assistant on an old Android TV box + Xiaoai voice control for Midea/Haier
 
+[![Release](https://img.shields.io/github/v/release/VotaverUno/android-tv-box-home-assistant?color=blue)](https://github.com/VotaverUno/android-tv-box-home-assistant/releases)
+[![Stars](https://img.shields.io/github/stars/VotaverUno/android-tv-box-home-assistant?style=social)](https://github.com/VotaverUno/android-tv-box-home-assistant/stargazers)
+[![License](https://img.shields.io/github/license/VotaverUno/android-tv-box-home-assistant)](LICENSE)
+![Platform](https://img.shields.io/badge/platform-armv7%20%7C%20arm64-lightgrey)
+![HA](https://img.shields.io/badge/Home%20Assistant-2026.11.1-blue)
+
 Turn a **cheap / idle Android TV box** (or an old Android phone) into a **24/7 Home Assistant server**
 — **no root, no custom firmware, no Raspberry Pi** — and control **Midea / Haier** appliances
 with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.

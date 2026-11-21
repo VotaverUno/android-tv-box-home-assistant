@@ -1,16 +1,16 @@
 # 旧安卓电视盒子跑 Home Assistant + 小爱语音控制美的/海尔（免刷机、免 root）
 [![Markdown links](https://github.com/VotaverUno/android-tv-box-home-assistant/actions/workflows/markdown-link-check.yml/badge.svg)](https://github.com/VotaverUno/android-tv-box-home-assistant/actions/workflows/markdown-link-check.yml)
 
-把闲置的 **安卓电视盒子**（小米盒子 / 运营商盒子 / 各种 Android TV Box）
+把闲置的 **安卓电视盒子**（品牌盒子 / 运营商盒子 / 各种 Android TV Box）
 变成一个 7×24 小时的 Home Assistant 服务器，并通过 **巴法云 → 米家 → 小爱同学**
 实现语音控制 **美的 / 海尔** 等米家接不进来的家电。
 
-> 本仓库内容来自一台 **32 位 armv7、2GB 内存、eMMC 存储** 的老小米盒子（MDZ-26-AA）的**实战记录**：
+> 本仓库内容来自一台 **32 位 armv7、2GB 内存、eMMC 存储** 的**老安卓电视盒子（型号 MDZ-26-AA）的实战记录**：
 > 踩过的坑、能用的版本、绕开编译的补丁，都写在文档里。**不绑定具体型号**，按自检清单判断你的盒子能不能用。
 
 ## 适合谁
 
-- 有闲置安卓盒子，想跑 Home Assistant 但不想买树莓派/NAS
+- 有闲置安卓盒子，想跑 Home Assistant 但不想买专用小主机 / NAS
 - 想用 **小爱同学语音控制非米家设备**（美的空调/洗碗机/热水器、海尔洗衣机等）
 - 盒子是 **32 位（armv7）**、内存不大、还不能 root 的"困难模式"
 

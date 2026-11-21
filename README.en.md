@@ -50,6 +50,13 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 - 📘 **English step-by-step guide**: [docs/GettingStarted-EN.md](docs/GettingStarted-EN.md)
 - 📘 Chinese step-by-step guide: [docs/教程-安卓盒子装HomeAssistant.md](docs/教程-安卓盒子装HomeAssistant.md)
 
+- 🏗 Architecture (English): [docs/Architecture-EN.md](docs/Architecture-EN.md)
+- 🏗 Architecture (Chinese): [docs/架构与数据流.md](docs/架构与数据流.md)
+- 🧾 Box compatibility list: [docs/盒子型号适配表.md](docs/盒子型号适配表.md)
+- 📝 Changelog: [CHANGELOG.md](CHANGELOG.md)
+- 🔒 Security policy: [SECURITY.md](SECURITY.md)
+- 🤝 Code of Conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
 ## Demo (static screenshot evidence)
 
 No video needed — a timestamp-aligned screenshot chain proves the voice round-trip:

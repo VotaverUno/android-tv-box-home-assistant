@@ -1,0 +1,15 @@
+# 本地配置与私有数据（不要提交）
+.homeassistant/
+*.log
+*.db
+*.tar.gz
+*.zip
+*.apk
+__pycache__/
+*.pyc
+.env
+secrets.yaml
+.storage/
+backups/
+# 个人网络信息
+*.private.md

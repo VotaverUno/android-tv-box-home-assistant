@@ -1,0 +1,56 @@
+name: 💡 功能建议 / Feature request
+description: 希望支持新的盒子型号、设备品牌、集成或改进文档
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        欢迎提建议！请尽量说清楚"用途 + 期望"，而不是直接要代码。
+        Please describe the use case and expected behavior.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 类型 / Category
+      options:
+        - 新盒子型号适配 / new box model
+        - 新设备/品牌接入 / new appliance brand
+        - 小爱/巴法云相关 / Xiaoai or Bemfa
+        - 稳定性/性能 / stability or performance
+        - 文档/教程改进 / docs
+        - 其他 / other
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: 使用场景 / Use case
+      description: 你想实现什么？现在为什么做不到？
+      placeholder: "我想把 XX 型号的洗衣机接入 HA 并用小爱控制，目前……"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为 / Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充信息 / Additional context
+      description: 设备型号、截图、相关链接（不要包含账号/密码/token）
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 已确认 / Checklist
+      options:
+        - label: 已搜索现有 Issues（避免重复）
+          required: true

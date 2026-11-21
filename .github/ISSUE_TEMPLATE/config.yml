@@ -1,0 +1,12 @@
+# 提问前先看这里 / Before you open an issue
+
+- 📘 先读教程的「故障排查」章节：[docs/教程-安卓盒子装HomeAssistant.md](../docs/教程-安卓盒子装HomeAssistant.md)
+- ❓ 先搜索现有 Issues（可能已经有人问过）
+- 🔒 贴日志/截图前，**删除 IP、MAC、账号、密码、token、UID** 等隐私信息
+- 💬 闲聊/展示/提问也欢迎到 Discussions（如果已开启）
+
+---
+
+- 📘 Read the troubleshooting chapter first
+- ❓ Search existing issues
+- 🔒 Redact IPs, MACs, accounts, passwords and tokens from logs/screenshots

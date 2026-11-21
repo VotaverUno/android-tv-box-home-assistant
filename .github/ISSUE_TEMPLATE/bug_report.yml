@@ -1,0 +1,76 @@
+name: 🐞 Bug 报告 / Bug report
+description: 安装或运行过程中出错、集成不工作、设备连不上
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！提交前请先看：
+        - 📘 [教程](../docs/教程-安卓盒子装HomeAssistant.md) 的「故障排查」章节
+        - ❓ 先搜索现有 Issues，避免重复
+
+        Please read the tutorial troubleshooting chapter and search existing issues first.
+
+  - type: input
+    id: box-model
+    attributes:
+      label: 盒子型号 / Device model
+      description: 例如 小米盒子4S Pro (MDZ-26-AA) / 运营商盒子 XXX
+      placeholder: "小米盒子4S Pro (MDZ-26-AA)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: abi
+    attributes:
+      label: CPU 架构 / ABI
+      options:
+        - armv7 (32-bit)
+        - arm64 (64-bit)
+        - x86 (模拟器)
+        - 不确定 / unknown
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: 关键版本
+      description: Android 版本 / Termux 版本 / HA 版本 / Python 版本（`uname -m`、`hass --version`、`python --version`）
+      placeholder: "Android 9 / Termux 0.119 / HA 2026.11.1 / Python 3.14.10"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 现象描述 / What happened
+      description: 你做了什么、期望什么、实际发生了什么
+      placeholder: |
+        1. 执行了……
+        2. 期望……
+        3. 实际……
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志 / Logs
+      description: 相关日志片段（`tail -n 100 ~/ha.log` 或安装报错全文）。**请先删除 IP/MAC/账号/token**
+      render: shell
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 已确认 / Checklist
+      options:
+        - label: 已阅读教程对应章节（troubleshooting）
+          required: true
+        - label: 已搜索现有 Issues
+          required: true
+        - label: 日志中已移除隐私信息（IP/MAC/账号/token）
+          required: true

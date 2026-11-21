@@ -30,22 +30,6 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 | Stability | runit supervision (auto-restart), backups, log rotation, package pinning, one-command rollback |
 | Remote ops | SSH + adb, plus a WebSocket helper to script HA registry changes |
 
-## Hardware choice: old box vs mini PC vs NAS
-
-> **Buying a NAS only to run Home Assistant is usually overkill.** Hardware price differs by
-> thousands of yuan while electricity differs by tens of yuan per year.
-
-| Option | Cost (approx.) | Power | RAM / perf | Best for | Main risk |
-|---|---|---|---|---|---|
-| **Old Android box** (this repo) | 0~100 CNY | 3~8 W | 32-bit / 2 GB / eMMC | you already own one; validate the idea | eMMC wear, small RAM |
-| **x86 mini PC (N100 class)** | 500~800 new / 300~500 used | 6~15 W | 8~16 GB / SSD | long-term stability + Docker | you install the OS |
-| **ARM SBC** | 400~800+ | 3~7 W | 4~8 GB / SD or SSD | low power, many tutorials | SD cards die; use an SSD |
-| **Brand NAS (new)** | 2300~2800+ plus disks | 20~40 W | powerful | you already want a NAS | poor value if only for HA |
-| **Official HA hardware** | ~700 | 5~10 W | appliance | zero tinkering | limited performance |
-
-3-year cost: old box ≈ 50 CNY, mini PC ≈ 800, NAS+disks ≈ 3300~4000.
-Notes: NAS HA is usually Docker-only (no add-ons/Supervisor); a VM is needed for the full experience.
-If you already own a NAS, HA costs almost nothing extra — otherwise start with a box or a mini PC.
 ## Requirements checklist (model-agnostic)
 
 | Item | Target | How to check |
@@ -68,6 +52,7 @@ If you already own a NAS, HA costs almost nothing extra — otherwise start with
 - 📘 Chinese step-by-step guide: [docs/教程-安卓盒子装HomeAssistant.md](docs/教程-安卓盒子装HomeAssistant.md)
 
 - 🏗 Architecture (English): [docs/Architecture-EN.md](docs/Architecture-EN.md)
+- 🧱 Tech stack (layers + rationale, Chinese): [docs/技术栈.md](docs/技术栈.md)
 - 🏗 Architecture (Chinese): [docs/架构与数据流.md](docs/架构与数据流.md)
 - 🧾 Box compatibility list: [docs/盒子型号适配表.md](docs/盒子型号适配表.md)
 - 📝 Changelog: [CHANGELOG.md](CHANGELOG.md)

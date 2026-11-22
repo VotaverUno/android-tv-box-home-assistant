@@ -212,47 +212,55 @@ dishwasher_standard_start:
 
 # 美的云程序 ID（实测）：156=内裤、148=袜子；设置程序后设备会自动切到对应筒。
 d9_wash_underwear:
-  alias: 小洗衣机-内裤洗（156）
+  alias: 小洗衣机-内裤洗（左筒+烘干+启动）
+  # 关键：筒位+程序/烘干/启动 必须放在同一条 TLV 记录里
   sequence:
     - service: switch.turn_on
       target:
-        entity_id: switch.YOUR_DEVICE_ID_db_power
+        entity_id: switch.YOUR_WASHER_DEVICE_ID_db_power
     - delay: "00:00:02"
-    - service: midea_ac_lan.set_attribute
-      data:
-        device_id: YOUR_MIDEA_DEVICE_ID
-        attribute: db_program
-        value: 156
     - service: midea_ac_lan.send_command
       data:
-        device_id: YOUR_MIDEA_DEVICE_ID
+        device_id: YOUR_WASHER_DEVICE_ID
         cmd_type: 2
-        cmd_body: "db060101"
-    - delay: "00:00:01"
-    - service: button.press
-      target:
-        entity_id: button.YOUR_DEVICE_ID_db_start
+        cmd_body: "db32010104019c"
+    - delay: "00:00:02"
+    - service: midea_ac_lan.send_command
+      data:
+        device_id: YOUR_WASHER_DEVICE_ID
+        cmd_type: 2
+        cmd_body: "db320101060101"
+    - delay: "00:00:02"
+    - service: midea_ac_lan.send_command
+      data:
+        device_id: YOUR_WASHER_DEVICE_ID
+        cmd_type: 2
+        cmd_body: "db320101020101"
 d9_wash_socks:
-  alias: 小洗衣机-袜子洗（148）
+  alias: 小洗衣机-袜子洗（右筒+烘干+启动）
+  # 同上：筒位必须与程序/启动组合发送
   sequence:
     - service: switch.turn_on
       target:
-        entity_id: switch.YOUR_DEVICE_ID_db_power
+        entity_id: switch.YOUR_WASHER_DEVICE_ID_db_power
     - delay: "00:00:02"
-    - service: midea_ac_lan.set_attribute
-      data:
-        device_id: YOUR_MIDEA_DEVICE_ID
-        attribute: db_program
-        value: 148
     - service: midea_ac_lan.send_command
       data:
-        device_id: YOUR_MIDEA_DEVICE_ID
+        device_id: YOUR_WASHER_DEVICE_ID
         cmd_type: 2
-        cmd_body: "db060101"
-    - delay: "00:00:01"
-    - service: button.press
-      target:
-        entity_id: button.YOUR_DEVICE_ID_db_start
+        cmd_body: "db320102040194"
+    - delay: "00:00:02"
+    - service: midea_ac_lan.send_command
+      data:
+        device_id: YOUR_WASHER_DEVICE_ID
+        cmd_type: 2
+        cmd_body: "db320102060101"
+    - delay: "00:00:02"
+    - service: midea_ac_lan.send_command
+      data:
+        device_id: YOUR_WASHER_DEVICE_ID
+        cmd_type: 2
+        cmd_body: "db320102020101"
 haier_smart_program_only:
   alias: 海尔-只选智慧洗（不启动）
   sequence:

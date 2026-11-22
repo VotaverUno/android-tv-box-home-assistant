@@ -201,33 +201,36 @@ dishwasher_standard_start:
         entity_id: select.212305747490962_mode_select
       data:
         option: standard_wash
-d9_standard_wash:
-  alias: 小洗衣机-一键左筒标准洗
+
+# 注意：以下脚本使用美的云程序 ID（156=内裤、148=袜子），
+# 且 db_location（左右筒）当前集成不可写，脚本作用于设备当前选中的筒。
+d9_wash_underwear:
+  alias: 小洗衣机-内裤洗（156，需设备当前选中左筒）
   sequence:
     - service: switch.turn_on
       target:
-        entity_id: switch.212305754200590_db_power
+        entity_id: switch.YOUR_DEVICE_ID_db_power
     - delay: "00:00:02"
-    - service: select.select_option
-      target:
-        entity_id: select.212305754200590_db_program
+    - service: midea_ac_lan.set_attribute
       data:
-        option: standard
+        device_id: YOUR_MIDEA_DEVICE_ID
+        attribute: db_program
+        value: 156
     - service: button.press
       target:
-        entity_id: button.212305754200590_db_start
-d9_intelligent_dry:
-  alias: 小洗衣机-一键右筒智能烘干
+        entity_id: button.YOUR_DEVICE_ID_db_start
+d9_wash_socks:
+  alias: 小洗衣机-袜子洗（148，需设备当前选中右筒）
   sequence:
     - service: switch.turn_on
       target:
-        entity_id: switch.212305754200590_dc_power
+        entity_id: switch.YOUR_DEVICE_ID_db_power
     - delay: "00:00:02"
-    - service: select.select_option
-      target:
-        entity_id: select.212305754200590_dc_program
+    - service: midea_ac_lan.set_attribute
       data:
-        option: intelligent_dry
+        device_id: YOUR_MIDEA_DEVICE_ID
+        attribute: db_program
+        value: 148
     - service: button.press
       target:
-        entity_id: button.212305754200590_dc_start
+        entity_id: button.YOUR_DEVICE_ID_db_start

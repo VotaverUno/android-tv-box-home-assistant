@@ -65,7 +65,7 @@
 
 | 老盒子实拍（接入显示器） | HA 概览（7 个区域） |
 |---|---|
-| ![盒子实拍](docs/images/01-box.jpg) | ![HA 概览](docs/images/02-ha-dashboard.png) |
+| ![架构图](docs/images/09-architecture.png) | ![HA 概览](docs/images/02-ha-dashboard.png) |
 
 | 小爱真实对话（21:20 执行成功） | HA 里空调同步变化（25.0°C） |
 |---|---|

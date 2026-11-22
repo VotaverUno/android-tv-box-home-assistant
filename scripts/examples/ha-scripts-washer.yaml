@@ -202,13 +202,13 @@ dishwasher_standard:
       data:
         option: standard_wash
 dishwasher_standard_start:
-  alias: 洗碗机-一键Standard启动
+  alias: 洗碗机-一键洗烘（洗 + 烘干）
   sequence:
     - service: select.select_option
       target:
         entity_id: select.YOUR_DISHWASHER_DEVICE_ID_mode_select
       data:
-        option: standard_wash
+        option: wash_dry
 
 # 美的云程序 ID（实测）：156=程序A、148=程序B；设置程序后设备会自动切到对应筒。
 d9_wash_program_a:

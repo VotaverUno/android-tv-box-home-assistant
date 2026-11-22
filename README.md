@@ -22,6 +22,7 @@
 | 美的设备 | 局域网直连（midea_ac_lan），含 32 位兼容补丁与 D9 复式洗烘一体机 bug 修复 |
 | 海尔设备 | haier 集成（海尔智家账号） |
 | 小爱语音 | 巴法云桥接：HA → 巴法云 → 米家"其他平台设备" → 小爱同学 |
+| 洗衣机程序控制 | 海尔：132 种程序 + 水温/转速；小洗衣机：**左右筒程序 + 启动/暂停**（新增 SELECT/BUTTON 实体） |
 | 稳定性 | runit 守护、**看门狗**（健康探测/内存/磁盘 + 冷却）、**每周自动备份 + 每月恢复演练**、日志轮转、版本锁定、**17 项自检**、一键回滚、异常推送（微信 / HA 通知） |
 | 远程维护 | SSH / adb 双通道，小白也能敲命令观测 |
 
@@ -35,6 +36,7 @@
 - 🏗 架构与数据流（角色分工 / 我们改了哪些程序 / 看门狗设计）: [docs/架构与数据流.md](docs/架构与数据流.md)
 - 🏗 English architecture: [docs/Architecture-EN.md](docs/Architecture-EN.md)
 - 🧱 技术栈（分层清单 + 选型理由）: [docs/技术栈.md](docs/技术栈.md)
+- 🧺 洗衣机程序控制（海尔 / 小洗衣机左右筒）: [docs/洗衣机程序控制.md](docs/洗衣机程序控制.md)
 - 🔒 安全策略: [SECURITY.md](SECURITY.md)
 - 🤝 行为准则: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 

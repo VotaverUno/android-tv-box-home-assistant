@@ -20,7 +20,7 @@
 - 海尔滚筒洗衣机：程序/水温/转速 select+number 实体原本已存在，新增 5 个封装脚本（选程序/启动/暂停/水温/转速）
 - 新增 11 个 HA 脚本：`script.haier_wash_*`、`script.d9_washer_*`、`script.d9_dryer_*`
 - 新增文档 `docs/洗衣机程序控制.md`（程序名中英对照、Lovelace 卡片、小爱桥接方案）
-- 实测：D9 `db_program` 设置为 `underwear` 成功回读
+- 实测：D9 `db_program` 设置为程序 A（156）成功回读
 
 ### Changed — 极简界面（按用户要求）
 - 新增一键脚本：`script.haier_smart_wash`（智慧洗）、`script.dishwasher_standard`、`script.dishwasher_standard_start`（Standard）、`script.d9_wash_program_a`（云程序156）、`script.d9_wash_program_b`（云程序148）；实测设程序会自动切换对应筒；新增「洗完自动烘干」参数（TLV 0x06 `db060101`），顺序为 设程序→开烘干→启动

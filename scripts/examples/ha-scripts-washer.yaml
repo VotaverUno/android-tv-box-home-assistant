@@ -58,8 +58,8 @@ d9_washer_program:
   alias: 小洗衣机-左筒(洗)选程序
   fields:
     program:
-      description: 程序名（English，见 select 选项，如 underwear/baby_clothes/cotton）
-      example: underwear
+      description: 程序名（English，见 select 选项，如 baby_clothes/cotton/wool）
+      example: baby_clothes
   sequence:
     - service: select.select_option
       target:

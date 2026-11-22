@@ -28,7 +28,7 @@
 | `stability/backup-schedule.sh` | `sh stability/backup-schedule.sh`（或 runit 服务 `backup`） | 每周自动备份 + 每月恢复演练 |
 | `stability/upgrade.sh` | `sh stability/upgrade.sh --preflight` 等 | 升级 Runbook：preflight / repatch / verify / upgrade / rollback |
 | `stability/ha_notify.py` | `ha_notify.py "标题" "内容"` | 通知助手：巴法云微信推送（HA 挂了也能发）+ HA 常驻通知 / notify 实体 |
-| `stability/selftest.sh` | `sh stability/selftest.sh` | 11 项健康检查（备份/网页/启动标记/日志轮转/包锁定/runit/磁盘/回滚脚本） |
+| `stability/selftest.sh` | `sh stability/selftest.sh` | 17 项健康检查（备份/网页/启动标记/日志轮转/包锁定/runit/磁盘/回滚脚本/看门狗/备份调度/恢复演练） |
 | `stability/rollback.sh` | `sh stability/rollback.sh list` | 回退工具（默认 dry-run，加 `--yes` 执行）：恢复配置、退回 nohup、解除包锁定、移除日志轮转 |
 
 ## 小爱/巴法云工具

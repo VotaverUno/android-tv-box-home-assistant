@@ -24,6 +24,8 @@
 | 脚本 | 用法 | 作用 |
 |---|---|---|
 | `stability/backup-ha.sh` | `sh stability/backup-ha.sh` | 打包 `~/.homeassistant` 到 `~/stability/backups` + `/sdcard/Download/ha-backups`，保留 4 份 |
+| `stability/watchdog.sh` | `sh stability/watchdog.sh`（或 runit 服务） | 看门狗：8123 健康探测（3 次失败重启，30 分钟冷却）、内存 <120MB 重启、磁盘 <2GB 清理旧备份并告警 |
+| `stability/ha_notify.py` | `ha_notify.py "标题" "内容"` | 通知助手：巴法云微信推送（HA 挂了也能发）+ HA 常驻通知 / notify 实体 |
 | `stability/selftest.sh` | `sh stability/selftest.sh` | 11 项健康检查（备份/网页/启动标记/日志轮转/包锁定/runit/磁盘/回滚脚本） |
 | `stability/rollback.sh` | `sh stability/rollback.sh list` | 回退工具（默认 dry-run，加 `--yes` 执行）：恢复配置、退回 nohup、解除包锁定、移除日志轮转 |
 

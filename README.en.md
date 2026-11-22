@@ -27,7 +27,7 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 | Midea | LAN-direct via `midea_ac_lan`, including a patch for the D9 washer-dryer combo bug |
 | Haier | `haier` integration (Haier Smart Home account) |
 | Xiaoai voice | Bemfa Cloud bridge + cleanup tooling |
-| Stability | runit supervision (auto-restart), backups, log rotation, package pinning, one-command rollback |
+| Stability | runit supervision (auto-restart), **watchdog** (8123 health probe + memory/disk thresholds + 30-min cooldown), backups, log rotation, package pinning, 14-check self-test, one-command rollback, alerts (WeChat / HA notifications) |
 | Remote ops | SSH + adb, plus a WebSocket helper to script HA registry changes |
 
 ## Requirements checklist (model-agnostic)

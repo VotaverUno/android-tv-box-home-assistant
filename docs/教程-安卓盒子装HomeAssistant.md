@@ -251,7 +251,8 @@ tail -f ~/ha.log        # 看到 "Home Assistant initialized" 即成功
 | 日志轮转 | `logrotate` 规则，5MB×3，copytruncate |
 | 版本锁定 | `apt-mark hold python python-pip`（防止 `pkg upgrade` 弄坏 venv） |
 | 一键回滚 | `scripts/stability/rollback.sh`（默认 dry-run） |
-| 自测 | `scripts/stability/selftest.sh`（11 项检查） |
+| 自测 | `scripts/stability/selftest.sh`（14 项检查） |
+| 健康看门狗 | `scripts/stability/watchdog.sh`（8123 探测 / 内存 / 磁盘 / 冷却 / 推送） |
 
 ```bash
 # runit 服务化示例

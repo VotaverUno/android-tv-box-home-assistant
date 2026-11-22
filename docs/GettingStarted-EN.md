@@ -257,7 +257,8 @@ open questions like "how is the dishwasher now". Sensor topics only support temp
 | Log rotation | `logrotate` rule 5 MB × 3 with `copytruncate` |
 | Pin versions | `apt-mark hold python python-pip` (prevents `pkg upgrade` from breaking the venv) |
 | Rollback | `scripts/stability/rollback.sh` (dry-run by default) |
-| Self-test | `scripts/stability/selftest.sh` (11 checks) |
+| Self-test | `scripts/stability/selftest.sh` (14 checks) |
+| Watchdog | `scripts/stability/watchdog.sh` (health probe / memory / disk / cooldown / alerts) |
 
 ```bash
 pkg install -y termux-services

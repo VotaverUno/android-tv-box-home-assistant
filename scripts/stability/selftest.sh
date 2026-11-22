@@ -6,6 +6,8 @@ set -u
 HOME_DIR=/data/data/com.termux/files/home
 PREFIX_DIR=/data/data/com.termux/files/usr
 export PATH="$PREFIX_DIR/bin:$PATH"
+export SVDIR="$PREFIX_DIR/var/service"
+export LOGDIR="$PREFIX_DIR/var/log"
 export TMPDIR="$PREFIX_DIR/tmp"
 mkdir -p "$TMPDIR" 2>/dev/null
 export HOME="$HOME_DIR"
@@ -77,6 +79,26 @@ if [ -f "$RB" ] && bash -n "$RB"; then ok "T9 rollback.sh syntax ok"; else bad "
 
 # T10: rollback dry-run does not touch anything
 if "$RB" list >/dev/null 2>&1; then ok "T10 rollback.sh list works"; else bad "T10 rollback.sh list failed"; fi
+
+# T12: watchdog runit service is running
+if command -v sv >/dev/null 2>&1 && sv status watchdog 2>/dev/null | grep -q "^run:"; then
+  ok "T12 watchdog service running"
+else
+  bad "T12 watchdog service not running"
+fi
+
+# T13: watchdog log was written recently (< 10 min)
+WLOG="$HOME_DIR/stability/logs/watchdog.log"
+if [ -f "$WLOG" ]; then
+  AGE=$(( $(date +%s) - $(stat -c %Y "$WLOG" 2>/dev/null || echo 0) ))
+  if [ "$AGE" -lt 600 ]; then ok "T13 watchdog log fresh (${AGE}s)"; else bad "T13 watchdog log stale (${AGE}s)"; fi
+else
+  bad "T13 watchdog log missing"
+fi
+
+# T14: watchdog state file present
+ST="$HOME_DIR/stability/watchdog/state"
+if [ -s "$ST" ]; then ok "T14 watchdog state present"; else bad "T14 watchdog state missing"; fi
 
 echo "-------------------------------------------------"
 echo "RESULT: pass=$PASS fail=$FAIL skip=$SKIP"

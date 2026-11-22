@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.2.0 (2026-11-22)
+
+### Added
+- 看门狗（L2/L3 落地）：`scripts/stability/watchdog.sh`
+  - 8123 健康探测：每 60s 一次，连续 3 次失败触发重启，带 30 分钟冷却与 300s 启动宽限（防重启风暴）
+  - 内存阈值：MemAvailable < 120MB 触发重启
+  - 磁盘阈值：/data 剩余 < 2GB 时清理旧备份并告警
+  - 状态机可测：`--selftest` / `--once` / `--status` / `--notify-test`（支持 dry-run）
+- 异常推送：`scripts/stability/ha_notify.py`
+  - 巴法云微信推送（HA 挂掉也能发；需在巴法云控制台绑定微信）
+  - HA 常驻通知 + notify 实体（`notify.send_message`）；iOS 远程推送需 Nabu Casa
+- 自检从 11 项扩展到 14 项（看门狗服务 / 日志新鲜度 / 状态文件）
+- runit 服务：`watchdog`（与 hass 一起开机自启）
+
+## v0.1.0 (2026-11-21)
+
 ## v0.1.0 (2026-11-21)
 
 ### Added

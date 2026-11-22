@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.3.0 (2026-11-22)
+
+### Added
+- 备份定时化：`scripts/stability/backup-schedule.sh`（runit 服务 `backup`）
+  - 每周自动备份（保留最新 4 份）
+  - 每月自动恢复演练：解压最新备份 → 校验 configuration.yaml / core.config_entries JSON / custom_components 数量
+  - 演练结果写入 `drill-result`，失败推送告警
+- 升级 Runbook：`scripts/stability/upgrade.sh`
+  - `--preflight`：快照版本信息 + 补丁文件 + 全量配置备份
+  - `--repatch`：自动重打 Android 平台 / DNS / 32 位垫片 / mobile_app / 美的 D9 补丁
+  - `--verify`：17 项自检 + `check_config` + 等待 :8123 恢复
+  - `--upgrade [ver]` / `--all [ver] --yes`（失败自动回滚）/ `--rollback [--dry-run]`
+- 自检 14 → 17 项（备份新鲜度、备份调度服务、恢复演练结果）
+- 新增文档 `docs/升级与恢复Runbook.md`
+
+## v0.2.0 (2026-11-22)
+
 ## v0.2.0 (2026-11-22)
 
 ### Added

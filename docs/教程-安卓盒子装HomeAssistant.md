@@ -251,7 +251,9 @@ tail -f ~/ha.log        # 看到 "Home Assistant initialized" 即成功
 | 日志轮转 | `logrotate` 规则，5MB×3，copytruncate |
 | 版本锁定 | `apt-mark hold python python-pip`（防止 `pkg upgrade` 弄坏 venv） |
 | 一键回滚 | `scripts/stability/rollback.sh`（默认 dry-run） |
-| 自测 | `scripts/stability/selftest.sh`（14 项检查） |
+| 自测 | `scripts/stability/selftest.sh`（17 项检查） |
+| 自动备份 | `scripts/stability/backup-schedule.sh`（每周 + 每月恢复演练，runit 服务 `backup`） |
+| 升级 Runbook | `scripts/stability/upgrade.sh`（preflight → repatch → verify → 失败回滚） |
 | 健康看门狗 | `scripts/stability/watchdog.sh`（8123 探测 / 内存 / 磁盘 / 冷却 / 推送） |
 
 ```bash

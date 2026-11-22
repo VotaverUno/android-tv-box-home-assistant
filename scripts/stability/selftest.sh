@@ -100,6 +100,30 @@ fi
 ST="$HOME_DIR/stability/watchdog/state"
 if [ -s "$ST" ]; then ok "T14 watchdog state present"; else bad "T14 watchdog state missing"; fi
 
+# T15: newest backup is not older than 8 days
+ARCHIVE_AGE=$(ls -1t "$HOME_DIR"/stability/backups/homeassistant_*.tar.gz 2>/dev/null | head -1)
+if [ -n "$ARCHIVE_AGE" ]; then
+  AGE_D=$(( ( $(date +%s) - $(stat -c %Y "$ARCHIVE_AGE") ) / 86400 ))
+  if [ "$AGE_D" -le 8 ]; then ok "T15 backup fresh (${AGE_D}d)"; else bad "T15 backup too old (${AGE_D}d)"; fi
+else
+  bad "T15 no backup archive"
+fi
+
+# T16: backup scheduler runit service is running
+if command -v sv >/dev/null 2>&1 && sv status backup 2>/dev/null | grep -q "^run:"; then
+  ok "T16 backup scheduler running"
+else
+  bad "T16 backup scheduler not running"
+fi
+
+# T17: restore drill passed within 35 days
+DRILL="$HOME_DIR/stability/backup-schedule/drill-result"
+if [ -f "$DRILL" ] && grep -q "^PASS" "$DRILL"; then
+  ok "T17 restore drill PASS"
+else
+  bad "T17 restore drill not passed"
+fi
+
 echo "-------------------------------------------------"
 echo "RESULT: pass=$PASS fail=$FAIL skip=$SKIP"
 [ "$FAIL" -eq 0 ] || exit 1

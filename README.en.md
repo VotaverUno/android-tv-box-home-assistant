@@ -27,7 +27,7 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 | Midea | LAN-direct via `midea_ac_lan`, including a patch for the D9 washer-dryer combo bug |
 | Haier | `haier` integration (Haier Smart Home account) |
 | Xiaoai voice | Bemfa Cloud bridge + cleanup tooling |
-| Stability | runit supervision (auto-restart), **watchdog** (8123 health probe + memory/disk thresholds + 30-min cooldown), backups, log rotation, package pinning, 14-check self-test, one-command rollback, alerts (WeChat / HA notifications) |
+| Stability | runit supervision, **watchdog** (health probe / memory / disk + cooldown), **weekly auto-backup + monthly restore drill**, log rotation, package pinning, **17-check self-test**, one-command rollback, alerts (WeChat / HA notifications) |
 | Remote ops | SSH + adb, plus a WebSocket helper to script HA registry changes |
 
 ## Requirements checklist (model-agnostic)
@@ -54,6 +54,7 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 - 🏗 Architecture (English): [docs/Architecture-EN.md](docs/Architecture-EN.md)
 - 🧱 Tech stack (layers + rationale, Chinese): [docs/技术栈.md](docs/技术栈.md)
 - 🏗 Architecture (Chinese): [docs/架构与数据流.md](docs/架构与数据流.md)
+- 🚑 Upgrade & recovery runbook (Chinese): [docs/升级与恢复Runbook.md](docs/升级与恢复Runbook.md)
 - 🧾 Box compatibility list: [docs/盒子型号适配表.md](docs/盒子型号适配表.md)
 - 📝 Changelog: [CHANGELOG.md](CHANGELOG.md)
 - 🔒 Security policy: [SECURITY.md](SECURITY.md)

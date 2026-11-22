@@ -65,6 +65,8 @@ repatch() {
   fi
   log "repatch: midea D9"
   "$PY" "$H/patch_d9.py" >> "$LOG" 2>&1 || log "repatch: D9 patch failed (continuing)"
+  log "repatch: midea D9 program select/buttons"
+  "$PY" "$H/stability/scripts/patch-d9-programs.py" >> "$LOG" 2>&1 || log "repatch: D9 program patch failed (continuing)"
   log "repatch: mobile_app manifest"
   bash "$H/patch_mobile_app.sh" >> "$LOG" 2>&1 || log "repatch: mobile_app patch failed (continuing)"
   log "repatch: 32-bit shims"

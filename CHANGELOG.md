@@ -14,6 +14,14 @@
   - **巴法云微信推送**（HA 挂掉也能发；需在巴法云控制台绑定微信）
   - HA 常驻通知 + `notify.send_message` 实体；iOS 远程推送需 Nabu Casa（已文档化）
 
+### Added — 洗衣机程序控制
+- 美的 D9（小洗衣机双筒）：新增 `select.*_db_program` / `select.*_dc_program`（78 / 31 个程序）与 4 个启动/暂停按钮
+  - 补丁：`scripts/patch-d9-programs.py`（幂等，升级 midea_ac_lan 后需重打；已并入 `upgrade.sh --repatch`）
+- 海尔滚筒洗衣机：程序/水温/转速 select+number 实体原本已存在，新增 5 个封装脚本（选程序/启动/暂停/水温/转速）
+- 新增 11 个 HA 脚本：`script.haier_wash_*`、`script.d9_washer_*`、`script.d9_dryer_*`
+- 新增文档 `docs/洗衣机程序控制.md`（程序名中英对照、Lovelace 卡片、小爱桥接方案）
+- 实测：D9 `db_program` 设置为 `underwear` 成功回读
+
 ### Added — 备份定时化
 - `scripts/stability/backup-schedule.sh` + runit 服务 `backup`
   - **每周**自动备份（保留最新 4 份）

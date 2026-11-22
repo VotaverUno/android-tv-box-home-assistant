@@ -1,0 +1,104 @@
+# 洗衣机控制脚本示例（追加到 ~/.homeassistant/scripts.yaml）
+# 配置里已有 script: !include scripts.yaml
+
+haier_wash_program:
+  alias: 海尔洗衣机-选择程序
+  fields:
+    program:
+      description: 程序名（与 select 选项一致，如 棉麻/化纤/羽绒/混合/衬衣/童装/轻柔/羊毛/牛仔）
+      example: 棉麻
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.haier_3c164064010e_unifiedprogramsettings
+      data:
+        option: "{{ program }}"
+haier_wash_start:
+  alias: 海尔洗衣机-启动
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.haier_3c164064010e_runningmode
+      data:
+        option: 启动
+haier_wash_pause:
+  alias: 海尔洗衣机-暂停
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.haier_3c164064010e_runningmode
+      data:
+        option: 暂停
+haier_wash_temp:
+  alias: 海尔洗衣机-设置水温
+  fields:
+    temperature:
+      description: 水温（℃）
+      example: 40
+  sequence:
+    - service: number.set_value
+      target:
+        entity_id: number.haier_3c164064010e_washtemp
+      data:
+        value: "{{ temperature }}"
+haier_wash_spin:
+  alias: 海尔洗衣机-设置脱水转速
+  fields:
+    speed:
+      description: 转速
+      example: 1200
+  sequence:
+    - service: number.set_value
+      target:
+        entity_id: number.haier_3c164064010e_spinspeed
+      data:
+        value: "{{ speed }}"
+
+d9_washer_program:
+  alias: 小洗衣机-左筒(洗)选程序
+  fields:
+    program:
+      description: 程序名（English，见 select 选项，如 underwear/baby_clothes/cotton）
+      example: underwear
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.212305754200590_db_program
+      data:
+        option: "{{ program }}"
+d9_washer_start:
+  alias: 小洗衣机-左筒(洗)启动
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305754200590_db_start
+d9_washer_pause:
+  alias: 小洗衣机-左筒(洗)暂停
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305754200590_db_pause
+d9_dryer_program:
+  alias: 小洗衣机-右筒(烘)选程序
+  fields:
+    program:
+      description: 程序名（English，见 select 选项，如 intelligent_dry/quick_dry/low_temp_dry）
+      example: intelligent_dry
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.212305754200590_dc_program
+      data:
+        option: "{{ program }}"
+d9_dryer_start:
+  alias: 小洗衣机-右筒(烘)启动
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305754200590_dc_start
+d9_dryer_pause:
+  alias: 小洗衣机-右筒(烘)暂停
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305754200590_dc_pause

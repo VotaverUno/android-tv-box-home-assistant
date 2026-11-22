@@ -10,6 +10,7 @@
 | `shims-32bit.py` | `~/ha-venv/bin/python shims-32bit.py` | **32 位盒子必备**：为 orjson / ulid-transform / fnv-hash-fast / uv 安装纯 Python 垫片，绕开 Rust 编译 |
 | `patch-android-platform.py` | `~/ha-venv/bin/python patch-android-platform.py` | 放行 HA 的 Android 平台检查（否则拒绝启动） |
 | `sitecustomize.py` | 复制到 `~/ha-venv/lib/python3.*/site-packages/sitecustomize.py` | 修复 Android 上 `pycares.getaddrinfo` 不可用导致的 `Could not contact DNS servers` |
+| `patch-d9-programs.py` | `~/ha-venv/bin/python patch-d9-programs.py` | 给美的 D9 复式洗烘一体机增加**左右筒程序 select**与**启动/暂停按钮**（升级后需重打） |
 | `patch-midea-d9-default.py` | `~/ha-venv/bin/python patch-midea-d9-default.py` | 修复 midea_ac_lan 的 D9（复式洗烘一体机）实体不显示的 bug（升级集成后需重打） |
 
 ## 运行/守护类

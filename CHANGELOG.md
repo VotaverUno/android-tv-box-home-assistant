@@ -22,6 +22,11 @@
 - 新增文档 `docs/洗衣机程序控制.md`（程序名中英对照、Lovelace 卡片、小爱桥接方案）
 - 实测：D9 `db_program` 设置为 `underwear` 成功回读
 
+### Changed — 极简界面（按用户要求）
+- 新增一键脚本：`script.haier_smart_wash`（智慧洗）、`script.dishwasher_standard`、`script.dishwasher_standard_start`（Standard）、`script.d9_standard_wash`、`script.d9_intelligent_dry`
+- **保留全部功能开关**（开机/关机/抖散/新风/童锁/自动投放/防过敏/护理/SPA/抗皱/蒸汽/光等离子/语音/自动开门等）
+- 清理旧版遗留的不可用实体（D9 旧 program sensor），并在注册表中禁用海尔 10 个多余程序选择类 select（可随时恢复）
+
 ### Added — 洗碗机程序控制
 - 洗碗机（美的 E1）：已有 `select.program` / `select.mode_select`（27 模式，含 `auto_wash` 智能、`eco_wash` 节能、`strong_wash` 超强）+ 5 个按钮
 - 新增 8 个封装脚本：`script.dishwasher_mode_start`（选中即启动）、`dishwasher_program`、`dishwasher_start/pause/resume/cancel`、`dishwasher_delay`、`dishwasher_start_delayed`

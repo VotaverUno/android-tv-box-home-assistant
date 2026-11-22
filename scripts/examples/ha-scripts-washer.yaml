@@ -170,3 +170,64 @@ dishwasher_start_delayed:
     - service: button.press
       target:
         entity_id: button.212305747490962_start_delayed
+
+
+haier_smart_wash:
+  alias: 海尔洗衣机-一键智慧洗
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.haier_3c164064010e_unifiedprogramsettings
+      data:
+        option: "智慧洗"
+    - service: select.select_option
+      target:
+        entity_id: select.haier_3c164064010e_runningmode
+      data:
+        option: "启动"
+dishwasher_standard:
+  alias: 洗碗机-选择Standard（不启动）
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.212305747490962_program
+      data:
+        option: standard_wash
+dishwasher_standard_start:
+  alias: 洗碗机-一键Standard启动
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.212305747490962_mode_select
+      data:
+        option: standard_wash
+d9_standard_wash:
+  alias: 小洗衣机-一键左筒标准洗
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.212305754200590_db_power
+    - delay: "00:00:02"
+    - service: select.select_option
+      target:
+        entity_id: select.212305754200590_db_program
+      data:
+        option: standard
+    - service: button.press
+      target:
+        entity_id: button.212305754200590_db_start
+d9_intelligent_dry:
+  alias: 小洗衣机-一键右筒智能烘干
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.212305754200590_dc_power
+    - delay: "00:00:02"
+    - service: select.select_option
+      target:
+        entity_id: select.212305754200590_dc_program
+      data:
+        option: intelligent_dry
+    - service: button.press
+      target:
+        entity_id: button.212305754200590_dc_start

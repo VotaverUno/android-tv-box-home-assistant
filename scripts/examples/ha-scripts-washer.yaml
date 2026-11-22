@@ -202,10 +202,9 @@ dishwasher_standard_start:
       data:
         option: standard_wash
 
-# 注意：以下脚本使用美的云程序 ID（156=内裤、148=袜子），
-# 且 db_location（左右筒）当前集成不可写，脚本作用于设备当前选中的筒。
+# 美的云程序 ID（实测）：156=内裤、148=袜子；设置程序后设备会自动切到对应筒。
 d9_wash_underwear:
-  alias: 小洗衣机-内裤洗（156，需设备当前选中左筒）
+  alias: 小洗衣机-内裤洗（156）
   sequence:
     - service: switch.turn_on
       target:
@@ -220,7 +219,7 @@ d9_wash_underwear:
       target:
         entity_id: button.YOUR_DEVICE_ID_db_start
 d9_wash_socks:
-  alias: 小洗衣机-袜子洗（148，需设备当前选中右筒）
+  alias: 小洗衣机-袜子洗（148）
   sequence:
     - service: switch.turn_on
       target:

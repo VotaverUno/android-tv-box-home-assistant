@@ -10,7 +10,7 @@ haier_wash_program:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.haier_3c164064010e_unifiedprogramsettings
+        entity_id: select.haier_YOUR_HAIER_DEVICE_ID_unifiedprogramsettings
       data:
         option: "{{ program }}"
 haier_wash_start:
@@ -18,7 +18,7 @@ haier_wash_start:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.haier_3c164064010e_runningmode
+        entity_id: select.haier_YOUR_HAIER_DEVICE_ID_runningmode
       data:
         option: 启动
 haier_wash_pause:
@@ -26,7 +26,7 @@ haier_wash_pause:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.haier_3c164064010e_runningmode
+        entity_id: select.haier_YOUR_HAIER_DEVICE_ID_runningmode
       data:
         option: 暂停
 haier_wash_temp:
@@ -38,7 +38,7 @@ haier_wash_temp:
   sequence:
     - service: number.set_value
       target:
-        entity_id: number.haier_3c164064010e_washtemp
+        entity_id: number.haier_YOUR_HAIER_DEVICE_ID_washtemp
       data:
         value: "{{ temperature }}"
 haier_wash_spin:
@@ -50,7 +50,7 @@ haier_wash_spin:
   sequence:
     - service: number.set_value
       target:
-        entity_id: number.haier_3c164064010e_spinspeed
+        entity_id: number.haier_YOUR_HAIER_DEVICE_ID_spinspeed
       data:
         value: "{{ speed }}"
 
@@ -63,7 +63,7 @@ d9_washer_program:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.212305754200590_db_program
+        entity_id: select.YOUR_WASHER_DEVICE_ID_db_program
       data:
         option: "{{ program }}"
 d9_washer_start:
@@ -71,13 +71,13 @@ d9_washer_start:
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305754200590_db_start
+        entity_id: button.YOUR_WASHER_DEVICE_ID_db_start
 d9_washer_pause:
   alias: 小洗衣机-左筒(洗)暂停
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305754200590_db_pause
+        entity_id: button.YOUR_WASHER_DEVICE_ID_db_pause
 d9_dryer_program:
   alias: 小洗衣机-右筒(烘)选程序
   fields:
@@ -87,7 +87,7 @@ d9_dryer_program:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.212305754200590_dc_program
+        entity_id: select.YOUR_WASHER_DEVICE_ID_dc_program
       data:
         option: "{{ program }}"
 d9_dryer_start:
@@ -95,13 +95,13 @@ d9_dryer_start:
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305754200590_dc_start
+        entity_id: button.YOUR_WASHER_DEVICE_ID_dc_start
 d9_dryer_pause:
   alias: 小洗衣机-右筒(烘)暂停
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305754200590_dc_pause
+        entity_id: button.YOUR_WASHER_DEVICE_ID_dc_pause
 
 
 dishwasher_program:
@@ -113,7 +113,7 @@ dishwasher_program:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.212305747490962_program
+        entity_id: select.YOUR_DISHWASHER_DEVICE_ID_program
       data:
         option: "{{ program }}"
 dishwasher_mode_start:
@@ -125,7 +125,7 @@ dishwasher_mode_start:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.212305747490962_mode_select
+        entity_id: select.YOUR_DISHWASHER_DEVICE_ID_mode_select
       data:
         option: "{{ mode }}"
 dishwasher_start:
@@ -133,25 +133,25 @@ dishwasher_start:
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305747490962_start
+        entity_id: button.YOUR_DISHWASHER_DEVICE_ID_start
 dishwasher_pause:
   alias: 洗碗机-暂停
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305747490962_pause
+        entity_id: button.YOUR_DISHWASHER_DEVICE_ID_pause
 dishwasher_resume:
   alias: 洗碗机-继续
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305747490962_resume
+        entity_id: button.YOUR_DISHWASHER_DEVICE_ID_resume
 dishwasher_cancel:
   alias: 洗碗机-取消
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305747490962_cancel
+        entity_id: button.YOUR_DISHWASHER_DEVICE_ID_cancel
 dishwasher_delay:
   alias: 洗碗机-设置预约时间
   fields:
@@ -161,7 +161,7 @@ dishwasher_delay:
   sequence:
     - service: number.set_value
       target:
-        entity_id: number.212305747490962_delay_minutes
+        entity_id: number.YOUR_DISHWASHER_DEVICE_ID_delay_minutes
       data:
         value: "{{ minutes }}"
 dishwasher_start_delayed:
@@ -169,7 +169,7 @@ dishwasher_start_delayed:
   sequence:
     - service: button.press
       target:
-        entity_id: button.212305747490962_start_delayed
+        entity_id: button.YOUR_DISHWASHER_DEVICE_ID_start_delayed
 
 
 haier_smart_wash:
@@ -177,12 +177,12 @@ haier_smart_wash:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.haier_3c164064010e_unifiedprogramsettings
+        entity_id: select.haier_YOUR_HAIER_DEVICE_ID_unifiedprogramsettings
       data:
         option: "智慧洗"
     - service: select.select_option
       target:
-        entity_id: select.haier_3c164064010e_runningmode
+        entity_id: select.haier_YOUR_HAIER_DEVICE_ID_runningmode
       data:
         option: "启动"
 dishwasher_standard:
@@ -190,7 +190,7 @@ dishwasher_standard:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.212305747490962_program
+        entity_id: select.YOUR_DISHWASHER_DEVICE_ID_program
       data:
         option: standard_wash
 dishwasher_standard_start:
@@ -198,7 +198,7 @@ dishwasher_standard_start:
   sequence:
     - service: select.select_option
       target:
-        entity_id: select.212305747490962_mode_select
+        entity_id: select.YOUR_DISHWASHER_DEVICE_ID_mode_select
       data:
         option: standard_wash
 

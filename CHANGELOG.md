@@ -27,6 +27,9 @@
 - **保留全部功能开关**（开机/关机/抖散/新风/童锁/自动投放/防过敏/护理/SPA/抗皱/蒸汽/光等离子/语音/自动开门等）
 - 清理旧版遗留的不可用实体（D9 旧 program sensor），并在注册表中禁用海尔 10 个多余程序选择类 select（可随时恢复）
 
+### Docs
+- 新增《家电适配方法论》：不同型号如何抓程序 ID / 烘干字段 / 筒位；含 D9/E1/海尔实测对照
+
 ### Added — 洗碗机程序控制
 - 洗碗机（美的 E1）：已有 `select.program` / `select.mode_select`（27 模式，含 `auto_wash` 智能、`eco_wash` 节能、`strong_wash` 超强）+ 5 个按钮
 - 新增 8 个封装脚本：`script.dishwasher_mode_start`（选中即启动）、`dishwasher_program`、`dishwasher_start/pause/resume/cancel`、`dishwasher_delay`、`dishwasher_start_delayed`

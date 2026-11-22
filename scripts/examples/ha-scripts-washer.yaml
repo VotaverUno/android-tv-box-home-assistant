@@ -102,3 +102,71 @@ d9_dryer_pause:
     - service: button.press
       target:
         entity_id: button.212305754200590_dc_pause
+
+
+dishwasher_program:
+  alias: 洗碗机-选择模式（不启动）
+  fields:
+    program:
+      description: auto_wash/eco_wash/strong_wash/single_dry/wash_dry
+      example: auto_wash
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.212305747490962_program
+      data:
+        option: "{{ program }}"
+dishwasher_mode_start:
+  alias: 洗碗机-按模式启动（智能/节能/超强）
+  fields:
+    mode:
+      description: auto_wash(智能)/eco_wash(节能)/strong_wash(超强)
+      example: auto_wash
+  sequence:
+    - service: select.select_option
+      target:
+        entity_id: select.212305747490962_mode_select
+      data:
+        option: "{{ mode }}"
+dishwasher_start:
+  alias: 洗碗机-启动
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305747490962_start
+dishwasher_pause:
+  alias: 洗碗机-暂停
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305747490962_pause
+dishwasher_resume:
+  alias: 洗碗机-继续
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305747490962_resume
+dishwasher_cancel:
+  alias: 洗碗机-取消
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305747490962_cancel
+dishwasher_delay:
+  alias: 洗碗机-设置预约时间
+  fields:
+    minutes:
+      description: 预约分钟数（0=取消）
+      example: 60
+  sequence:
+    - service: number.set_value
+      target:
+        entity_id: number.212305747490962_delay_minutes
+      data:
+        value: "{{ minutes }}"
+dishwasher_start_delayed:
+  alias: 洗碗机-预约启动
+  sequence:
+    - service: button.press
+      target:
+        entity_id: button.212305747490962_start_delayed

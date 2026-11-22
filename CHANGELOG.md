@@ -22,6 +22,11 @@
 - 新增文档 `docs/洗衣机程序控制.md`（程序名中英对照、Lovelace 卡片、小爱桥接方案）
 - 实测：D9 `db_program` 设置为 `underwear` 成功回读
 
+### Added — 洗碗机程序控制
+- 洗碗机（美的 E1）：已有 `select.program` / `select.mode_select`（27 模式，含 `auto_wash` 智能、`eco_wash` 节能、`strong_wash` 超强）+ 5 个按钮
+- 新增 8 个封装脚本：`script.dishwasher_mode_start`（选中即启动）、`dishwasher_program`、`dishwasher_start/pause/resume/cancel`、`dishwasher_delay`、`dishwasher_start_delayed`
+- **限制**：烘干时长（`dry_set_min`）本地协议 `MessageWork` 无对应字节，只能读不能写；可用 `wash_dry`/`single_dry` 程序替代（文档已说明）
+
 ### Added — 备份定时化
 - `scripts/stability/backup-schedule.sh` + runit 服务 `backup`
   - **每周**自动备份（保留最新 4 份）

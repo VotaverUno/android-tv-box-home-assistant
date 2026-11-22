@@ -210,9 +210,9 @@ dishwasher_standard_start:
       data:
         option: standard_wash
 
-# 美的云程序 ID（实测）：156=内裤、148=袜子；设置程序后设备会自动切到对应筒。
-d9_wash_underwear:
-  alias: 小洗衣机-内裤洗（左筒+烘干+启动）
+# 美的云程序 ID（实测）：156=程序A、148=程序B；设置程序后设备会自动切到对应筒。
+d9_wash_program_a:
+  alias: 小洗衣机-程序A洗（左筒+烘干+启动）
   # 关键：筒位+程序/烘干/启动 必须放在同一条 TLV 记录里
   sequence:
     - service: switch.turn_on
@@ -236,8 +236,8 @@ d9_wash_underwear:
         device_id: YOUR_WASHER_DEVICE_ID
         cmd_type: 2
         cmd_body: "db320101020101"
-d9_wash_socks:
-  alias: 小洗衣机-袜子洗（右筒+烘干+启动）
+d9_wash_program_b:
+  alias: 小洗衣机-程序B洗（右筒+烘干+启动）
   # 同上：筒位必须与程序/启动组合发送
   sequence:
     - service: switch.turn_on

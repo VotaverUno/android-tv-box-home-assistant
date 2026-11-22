@@ -173,16 +173,24 @@ dishwasher_start_delayed:
 
 
 haier_smart_wash:
-  alias: 海尔洗衣机-一键智慧洗
+  alias: 海尔-一键智慧洗
   sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.YOUR_HAIER_DEVICE_ID_onoffstatus
+    - delay: "00:00:02"
     - service: select.select_option
       target:
-        entity_id: select.haier_YOUR_HAIER_DEVICE_ID_unifiedprogramsettings
+        entity_id: select.YOUR_HAIER_DEVICE_ID_unifiedprogramsettings
       data:
         option: "智慧洗"
+    - wait_template: "{{ is_state('select.YOUR_HAIER_DEVICE_ID_unifiedprogramsettings', '智慧洗') }}"
+      timeout: "00:00:20"
+      continue_on_timeout: true
+    - delay: "00:00:02"
     - service: select.select_option
       target:
-        entity_id: select.haier_YOUR_HAIER_DEVICE_ID_runningmode
+        entity_id: select.YOUR_HAIER_DEVICE_ID_runningmode
       data:
         option: "启动"
 dishwasher_standard:
@@ -245,3 +253,18 @@ d9_wash_socks:
     - service: button.press
       target:
         entity_id: button.YOUR_DEVICE_ID_db_start
+haier_smart_program_only:
+  alias: 海尔-只选智慧洗（不启动）
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.YOUR_HAIER_DEVICE_ID_onoffstatus
+    - delay: "00:00:02"
+    - service: select.select_option
+      target:
+        entity_id: select.YOUR_HAIER_DEVICE_ID_unifiedprogramsettings
+      data:
+        option: "智慧洗"
+    - wait_template: "{{ is_state('select.YOUR_HAIER_DEVICE_ID_unifiedprogramsettings', '智慧洗') }}"
+      timeout: "00:00:20"
+      continue_on_timeout: true

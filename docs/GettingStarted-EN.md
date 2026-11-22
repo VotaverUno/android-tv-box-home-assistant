@@ -8,6 +8,15 @@
 
 ---
 
+## Before you start: plug in a USB mouse + keyboard
+
+Using a TV remote to type Terminal commands is painful. In practice:
+
+- **Mouse**: on the TV box you usually need to **double-click to select**; a single click only moves the cursor.
+- **Keyboard**: a USB keyboard (or Bluetooth keyboard) works normally — **Enter = confirm**, and you can type commands directly.
+- A USB hub helps if you have only one port. As a fallback you can also type remotely via `adb shell` from a PC.
+
+
 ## 0.0 Architecture at a glance (5 min, recommended)
 
 Main path: **voice → Mi Home → Bemfa Cloud → Home Assistant → integration → appliance**

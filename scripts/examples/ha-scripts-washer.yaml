@@ -215,6 +215,12 @@ d9_wash_underwear:
         device_id: YOUR_MIDEA_DEVICE_ID
         attribute: db_program
         value: 156
+    - service: midea_ac_lan.send_command
+      data:
+        device_id: YOUR_MIDEA_DEVICE_ID
+        cmd_type: 2
+        cmd_body: "db060101"
+    - delay: "00:00:01"
     - service: button.press
       target:
         entity_id: button.YOUR_DEVICE_ID_db_start
@@ -230,6 +236,12 @@ d9_wash_socks:
         device_id: YOUR_MIDEA_DEVICE_ID
         attribute: db_program
         value: 148
+    - service: midea_ac_lan.send_command
+      data:
+        device_id: YOUR_MIDEA_DEVICE_ID
+        cmd_type: 2
+        cmd_body: "db060101"
+    - delay: "00:00:01"
     - service: button.press
       target:
         entity_id: button.YOUR_DEVICE_ID_db_start

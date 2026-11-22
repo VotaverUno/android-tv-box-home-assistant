@@ -23,7 +23,7 @@
 - 实测：D9 `db_program` 设置为 `underwear` 成功回读
 
 ### Changed — 极简界面（按用户要求）
-- 新增一键脚本：`script.haier_smart_wash`（智慧洗）、`script.dishwasher_standard`、`script.dishwasher_standard_start`（Standard）、`script.d9_wash_underwear`（云程序156/内裤）、`script.d9_wash_socks`（云程序148/袜子）；实测设程序会自动切换对应筒
+- 新增一键脚本：`script.haier_smart_wash`（智慧洗）、`script.dishwasher_standard`、`script.dishwasher_standard_start`（Standard）、`script.d9_wash_underwear`（云程序156/内裤）、`script.d9_wash_socks`（云程序148/袜子）；实测设程序会自动切换对应筒；新增「洗完自动烘干」参数（TLV 0x06 `db060101`），顺序为 设程序→开烘干→启动
 - **保留全部功能开关**（开机/关机/抖散/新风/童锁/自动投放/防过敏/护理/SPA/抗皱/蒸汽/光等离子/语音/自动开门等）
 - 清理旧版遗留的不可用实体（D9 旧 program sensor），并在注册表中禁用海尔 10 个多余程序选择类 select（可随时恢复）
 

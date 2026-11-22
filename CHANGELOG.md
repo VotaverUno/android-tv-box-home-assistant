@@ -1,35 +1,46 @@
 # Changelog
 
-## v0.3.0 (2026-11-22)
+## v0.2.0 (2026-11-22)
 
-### Added
-- 备份定时化：`scripts/stability/backup-schedule.sh`（runit 服务 `backup`）
-  - 每周自动备份（保留最新 4 份）
-  - 每月自动恢复演练：解压最新备份 → 校验 configuration.yaml / core.config_entries JSON / custom_components 数量
-  - 演练结果写入 `drill-result`，失败推送告警
-- 升级 Runbook：`scripts/stability/upgrade.sh`
-  - `--preflight`：快照版本信息 + 补丁文件 + 全量配置备份
-  - `--repatch`：自动重打 Android 平台 / DNS / 32 位垫片 / mobile_app / 美的 D9 补丁
-  - `--verify`：17 项自检 + `check_config` + 等待 :8123 恢复
+> 本版本合并了原计划的 v0.2.0（看门狗）与 v0.3.0（备份调度 / 升级 Runbook）。
+
+### Added — 看门狗（L2 / L3 自愈）
+- `scripts/stability/watchdog.sh` + runit 服务 `watchdog`
+  - 8123 健康探测：每 60s，连续 3 次失败触发重启，**30 分钟冷却 + 300s 启动宽限**（防重启风暴）
+  - 内存阈值：`MemAvailable < 120MB` 触发重启
+  - 磁盘阈值：`/data 剩余 < 2GB` 清理旧备份（保留最新 2 份）并告警
+  - 状态机可测：`--selftest` / `--once` / `--status` / `--notify-test`，支持 `WD_DRY_RUN=1`
+- 通知助手 `scripts/stability/ha_notify.py`
+  - **巴法云微信推送**（HA 挂掉也能发；需在巴法云控制台绑定微信）
+  - HA 常驻通知 + `notify.send_message` 实体；iOS 远程推送需 Nabu Casa（已文档化）
+
+### Added — 备份定时化
+- `scripts/stability/backup-schedule.sh` + runit 服务 `backup`
+  - **每周**自动备份（保留最新 4 份）
+  - **每月**自动恢复演练：解压最新备份 → 校验 `configuration.yaml` 顶层键 → 校验 `.storage/core.config_entries` JSON → 校验 `custom_components` ≥1
+  - 演练结果写入 `drill-result`；失败自动推送告警
+  - 手动触发：`--force-backup` / `--force-drill` / `--status`
+
+### Added — 升级 Runbook
+- `scripts/stability/upgrade.sh`
+  - `--preflight`：记录 HA/Python 版本与 pip freeze、快照 5 类补丁文件、全量配置备份
+  - `--repatch`：自动重打 Android 平台放行、sitecustomize DNS、32 位垫片（缺则重装）、mobile_app manifest、美的 D9
+  - `--verify`：17 项自检 + `hass --script check_config` + 等待 :8123 恢复（最多 3 分钟）
   - `--upgrade [ver]` / `--all [ver] --yes`（失败自动回滚）/ `--rollback [--dry-run]`
-- 自检 14 → 17 项（备份新鲜度、备份调度服务、恢复演练结果）
 - 新增文档 `docs/升级与恢复Runbook.md`
 
-## v0.2.0 (2026-11-22)
+### Tests
+- 自检 11 → **17 项**：新增 T15 备份新鲜度、T16 备份调度服务、T17 恢复演练结果
+- 实测：`pass=17 fail=0`；恢复演练 PASS；preflight/verify/rollback dry-run 均通过
 
-## v0.2.0 (2026-11-22)
+### Fixed
+- 看门狗 `disk_free` 在 Toybox `df`（不支持 `-m`）下返回空 → 改用 `df -Pk` 换算
+- 恢复演练不能用 `yaml.safe_load` 解析 `configuration.yaml`（含 HA 专用 `!include` 标签）→ 改用 config_entries JSON + 关键字校验
 
-### Added
-- 看门狗（L2/L3 落地）：`scripts/stability/watchdog.sh`
-  - 8123 健康探测：每 60s 一次，连续 3 次失败触发重启，带 30 分钟冷却与 300s 启动宽限（防重启风暴）
-  - 内存阈值：MemAvailable < 120MB 触发重启
-  - 磁盘阈值：/data 剩余 < 2GB 时清理旧备份并告警
-  - 状态机可测：`--selftest` / `--once` / `--status` / `--notify-test`（支持 dry-run）
-- 异常推送：`scripts/stability/ha_notify.py`
-  - 巴法云微信推送（HA 挂掉也能发；需在巴法云控制台绑定微信）
-  - HA 常驻通知 + notify 实体（`notify.send_message`）；iOS 远程推送需 Nabu Casa
-- 自检从 11 项扩展到 14 项（看门狗服务 / 日志新鲜度 / 状态文件）
-- runit 服务：`watchdog`（与 hass 一起开机自启）
+### Known limitations
+- iOS 远程推送需 Nabu Casa；否则只能收到 HA 常驻通知
+- 巴法云微信推送需先在控制台绑定微信
+- armv7 已被 HA 官方淘汰：请锁定版本，升级前务必 `upgrade.sh --preflight`
 
 ## v0.1.0 (2026-11-21)
 

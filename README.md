@@ -36,7 +36,7 @@
 - 🏗 架构与数据流（角色分工 / 我们改了哪些程序 / 看门狗设计）: [docs/架构与数据流.md](docs/架构与数据流.md)
 - 🏗 English architecture: [docs/Architecture-EN.md](docs/Architecture-EN.md)
 - 🧱 技术栈（分层清单 + 选型理由）: [docs/技术栈.md](docs/技术栈.md)
-- 🧺 洗衣机程序控制（海尔 / 小洗衣机左右筒）: [docs/洗衣机程序控制.md](docs/洗衣机程序控制.md)
+- 🧺 **家电控制与语音排错（洗衣机/洗碗机/小爱）**: [docs/家电控制与语音排错.md](docs/家电控制与语音排错.md)
 - 🔒 安全策略: [SECURITY.md](SECURITY.md)
 - 🤝 行为准则: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
@@ -111,10 +111,8 @@
 - ⚠️ 任何时候都**不要**把账号、密码、token、IP、MAC 发给任何人或 AI。
 
 ## 文档
-- 🧩 家电适配方法论（不同型号怎么抓程序 ID / 烘干 / 筒位）: [docs/家电适配方法论.md](docs/家电适配方法论.md)
 
 ## 文档
-- 🩺 语音控制与排错总结（踩坑 + 排错清单）: [docs/语音控制与排错总结.md](docs/语音控制与排错总结.md)
 
 ## 反馈与贡献
 

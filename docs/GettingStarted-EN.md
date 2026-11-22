@@ -16,6 +16,8 @@ Using a TV remote to type Terminal commands is painful. In practice:
 - **Keyboard**: a USB keyboard (or Bluetooth keyboard) works normally — **Enter = confirm**, and you can type commands directly.
 - A USB hub helps if you have only one port. As a fallback you can also type remotely via `adb shell` from a PC.
 
+**About the display**: a monitor or TV via HDMI works fine, but **no display is needed for daily operation** — after setup, the box runs Home Assistant in the background; manage it from any browser at `http://BOX_IP:8123`. Connect a display + mouse/keyboard only for first-time installation and troubleshooting.
+
 
 ## 0.0 Architecture at a glance (5 min, recommended)
 

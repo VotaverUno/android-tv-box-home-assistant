@@ -3,16 +3,18 @@
 # If a still-missing requirement (pymicro-vad) is not installed yet, install it once while
 # the compiler is reachable via PATH (that was the "Permission denied:
 # arm-linux-androideabi-clang++" cause). Normal starts skip pip entirely.
-export PREFIX=/data/data/com.termux/files/usr
-export HOME=/data/data/com.termux/files/home
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/env.sh"
+export PREFIX="$TERMUX_PREFIX"
+export HOME="$TERMUX_HOME"
 export PATH=$PREFIX/bin:$PREFIX/bin/applets:/system/bin
 export LD_LIBRARY_PATH=$PREFIX/lib
 export TMPDIR=$PREFIX/tmp
 export TERM=xterm-256color
 export PIP_DEFAULT_TIMEOUT=120
 export PIP_RETRIES=5
-VENV="$HOME/ha-venv"
-LOG="$HOME/ha.log"
+VENV="$VENV_DIR"
+LOG="$HA_LOG"
 PYMICRO_VAD_VERSION="${PYMICRO_VAD_VERSION:-1.0.1}"
 cd "$HOME" || exit 1
 

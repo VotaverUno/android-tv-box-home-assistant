@@ -5,10 +5,12 @@
 # Keeps the newest 4 archives in each place.
 set -u
 
-HOME_DIR=/data/data/com.termux/files/home
-SRC="$HOME_DIR/.homeassistant"
-B1="$HOME_DIR/stability/backups"
-B2="/sdcard/Download/ha-backups"
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/../env.sh"
+HOME_DIR="$TERMUX_HOME"
+SRC="$HA_CONFIG"
+B1="$BACKUP_DIR"
+B2="$BACKUP_COPY_DIR"
 KEEP=4
 STAMP=$(date +%Y%m%d_%H%M)
 NAME="homeassistant_${STAMP}.tar.gz"

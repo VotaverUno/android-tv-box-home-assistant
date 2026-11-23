@@ -3,8 +3,10 @@
 # Exit code 0 = all PASS, 1 = at least one FAIL.
 set -u
 
-HOME_DIR=/data/data/com.termux/files/home
-PREFIX_DIR=/data/data/com.termux/files/usr
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/../env.sh"
+HOME_DIR="$TERMUX_HOME"
+PREFIX_DIR="$TERMUX_PREFIX"
 export PATH="$PREFIX_DIR/bin:$PATH"
 export SVDIR="$PREFIX_DIR/var/service"
 export LOGDIR="$PREFIX_DIR/var/log"

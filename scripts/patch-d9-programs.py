@@ -16,16 +16,15 @@ Run with the HA venv python (paths assume the standard Termux HA install):
 """
 from __future__ import annotations
 
+import os
 import re
 import shutil
 import sys
 from pathlib import Path
 
-DEVICES = Path(
-    "/data/data/com.termux/files/home/.homeassistant/custom_components/"
-    "midea_ac_lan/midea_devices.py"
-)
-SNAP = Path("/data/data/com.termux/files/home/stability/snapshots")
+HA_CONFIG = Path(os.environ.get("HA_CONFIG", "/data/data/com.termux/files/home/.homeassistant"))
+DEVICES = HA_CONFIG / "custom_components" / "midea_ac_lan" / "midea_devices.py"
+SNAP = Path(os.environ.get("HA_SNAPSHOT_DIR", "/data/data/com.termux/files/home/stability/snapshots"))
 
 
 def select_block(attr: str, options_dict: str, name: str, icon: str) -> str:

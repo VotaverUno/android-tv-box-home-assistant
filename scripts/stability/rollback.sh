@@ -11,13 +11,15 @@
 # Every destructive action prints what it will do first; pass --yes to execute.
 set -u
 
-HOME_DIR=/data/data/com.termux/files/home
-PREFIX_DIR=/data/data/com.termux/files/usr
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/../env.sh"
+HOME_DIR="$TERMUX_HOME"
+PREFIX_DIR="$TERMUX_PREFIX"
 export PATH="$PREFIX_DIR/bin:$PATH"
 export HOME="$HOME_DIR"
-SNAP="$HOME_DIR/stability/snapshots"
-B1="$HOME_DIR/stability/backups"
-LR="$PREFIX_DIR/etc/logrotate.d/hass"
+SNAP="$SNAPSHOT_DIR"
+B1="$BACKUP_DIR"
+LR="$LOGROTATE_DIR/hass"
 BOOT="$HOME_DIR/.termux/boot/start-ha.sh"
 YES=0
 for arg in "$@"; do [ "$arg" = "--yes" ] && YES=1; done

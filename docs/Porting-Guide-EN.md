@@ -173,9 +173,9 @@ This is the single most valuable contribution for the next person.
 
 ---
 
-## 5. Planned path/config abstraction (env.sh)
+## 5. Path/config abstraction (`scripts/env.sh`, implemented)
 
-Today 10 scripts hardcode Termux paths. Planned refactor (not merged yet):
+Implemented: `scripts/env.sh` provides defaults and env overrides; the stability scripts and `start-ha.sh` source it. Everything can be overridden from the environment:
 
 ```bash
 # scripts/stability/env.sh  (sourced by all stability scripts)
@@ -246,3 +246,89 @@ PRs to this guide and to the compatibility table are as valuable as code PRs.
 - [Tech Stack (EN)](TechStack-EN.md)
 - [Upgrade & Recovery Runbook (EN)](UpgradeRunbook-EN.md)
 - [Box compatibility list](BoxCompatibility-EN.md)
+
+---
+
+## 10. Portability matrix by HA install type
+
+| HA install type | This project applies? | What to keep |
+|---|---|---|
+| HA Core venv on Android/Termux | ✅ yes | L1–L5 |
+| HA Core venv on Debian/Armbian | ⚠️ partially | L4 + L5 (replace runit with systemd); skip L1–L3 |
+| HA Container (Docker) | ❌ no | only the integration patches may be reusable |
+| HAOS | ❌ no | use HAOS; this project is for hardware that can't run it |
+
+## 11. Hardware and peripherals — what to check before porting
+
+| Item | Target | Why it matters |
+|---|---|---|
+| RAM | ≥ 2 GB (4 GB comfortable) | HA Core + integrations; 1 GB will swap/OOM |
+| Storage | eMMC/SD is a wear item; USB SSD preferred | recorder/logs/backups write constantly |
+| Cooling | passive boxes throttle; watch temps | a hot box randomly restarts |
+| Network | 2.4 GHz Wi-Fi only on many boxes | 5 GHz-only environments need a USB NIC or an AP change |
+| Address | give the box a **static/DHCP-reserved IP** | HA URL, integrations and voice bridge all depend on it |
+| Timezone/locale | set Asia/Shanghai (or yours) in HA | automations and logs use local time |
+
+## 12. Resource thresholds must be re-tuned
+
+The watchdog defaults were tuned for a 2 GB box. Adjust them for yours:
+
+| Variable | Default (2 GB box) | Tuning hint |
+|---|---|---|
+| `MEM_MIN_MB` | ~120 MB | 64 MB on 1 GB boxes; 256 MB on 4 GB boxes |
+| `DISK_MIN_MB` | ~2048 MB | keep ≥ 2× your backup size |
+| `INTERVAL` | 60 s | 120 s on very slow boxes |
+| `FAIL_THRESHOLD` | 3 | keep ≥ 3 |
+| `COOLDOWN` | 1800 s | keep ≥ 900 s to avoid restart storms |
+| start grace | 300 s | raise if your cold start is slower |
+
+## 13. Region / cloud dependencies (the voice path)
+
+| Component | Assumption | Outside that region |
+|---|---|---|
+| Bemfa Cloud | account + Mi Home (China) binding | use Alexa/Google/HomeKit bridges instead; L5 ops layer still applies |
+| Xiaoai voice | Mi Home ecosystem | substitute your local voice assistant + an HA bridge |
+| Midea account | China or international account (different APIs) | check which `midea_ac_lan` cloud login your account supports |
+| Haier | Haier Smart Home cloud (China app) | `haier` integration may not cover other regions' accounts |
+
+Porting the **ops layer** is region-independent; porting the **voice path** is not.
+
+## 14. Verification matrix (acceptance before calling it "ported")
+
+| # | Check | Command / evidence | Expected |
+|---|---|---|---|
+| 1 | HA starts | `curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8123/` | `200` |
+| 2 | Config valid | `hass --script check_config -c ~/.homeassistant` | no errors |
+| 3 | Entities live | HA UI → device page | expected entities, not `unavailable` |
+| 4 | Services supervised | `sv status hass` (or `systemctl status`) | `run` |
+| 5 | Self-test | `bash scripts/stability/selftest.sh` | `pass=17 fail=0` |
+| 6 | Backup fresh | `ls -lt ~/stability/backups` | archive < 8 days old |
+| 7 | Restore drill | `cat ~/stability/backup-schedule/drill-result` | `PASS` |
+| 8 | Upgrade dry-run | `upgrade.sh --preflight` / `--verify` | completes |
+| 9 | Voice path | say one command / check Bemfa console | device reacts |
+| 10 | Rollback tested | `upgrade.sh --rollback --dry-run` | prints plan, no changes |
+
+## 15. Rollback plan while porting (do this before touching a running box)
+
+1. Backup first: `bash scripts/stability/backup-ha.sh` (or `tar czf` the config yourself);
+2. Copy the files you are about to replace (shims in `site-packages`, `sitecustomize.py`, patched HA files) to `~/stability/snapshots/`;
+3. Keep the old start method working until the new one is verified;
+4. If HA fails to start: restore the copied files, `sv restart hass` (or `kill` the manual process and start the old way), then `tail -100 ~/ha.log`;
+5. Worst case: restore the config backup and reinstall HA with the pinned version from `pip freeze`.
+
+Never delete the original backup until the new setup has run for a few days.
+
+## 16. Completeness checklist
+
+- [ ] hardware recorded (model / arch / RAM / OS / storage);
+- [ ] decided which layers apply (L1–L5) and which are skipped;
+- [ ] HA starts and `check_config` passes;
+- [ ] every needed integration loaded, patches applied and verified;
+- [ ] voice path works **or** a regional alternative is documented;
+- [ ] services auto-start after reboot (runit / systemd);
+- [ ] watchdog + backup + self-test installed and thresholds re-tuned;
+- [ ] restore drill PASS;
+- [ ] upgrade preflight/verify path tested;
+- [ ] rollback tested once;
+- [ ] a row added to the compatibility table;
+- [ ] docs updated with anything you had to change.

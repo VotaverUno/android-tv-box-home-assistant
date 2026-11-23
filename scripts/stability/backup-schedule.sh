@@ -2,13 +2,15 @@
 # Weekly automatic backup + monthly restore drill, supervised by runit.
 #   --once / --force-backup / --force-drill / --status
 set -u
-H=/data/data/com.termux/files/home
-P=/data/data/com.termux/files/usr
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/../env.sh"
+H="$TERMUX_HOME"
+P="$TERMUX_PREFIX"
 export PATH="$P/bin:$PATH"
 export HOME="$H"
 export TMPDIR="$P/tmp"
-LOG="$H/stability/logs/backup-schedule.log"
-STATE="$H/stability/backup-schedule"
+LOG="$LOG_DIR/backup-schedule.log"
+STATE="$STABILITY_DIR/backup-schedule"
 mkdir -p "$STATE" "$TMPDIR"
 WEEK=604800
 DRILL=$((30 * 86400))
@@ -16,7 +18,7 @@ DRILL=$((30 * 86400))
 log() { printf '%s %s\n' "$(date '+%F %T')" "$*" >> "$LOG"; }
 get() { [ -f "$STATE/$1" ] && cat "$STATE/$1" || echo 0; }
 put() { date +%s > "$STATE/$1"; }
-notify() { "$H/ha-venv/bin/python" "$H/stability/scripts/ha_notify.py" "$1" "$2" >> "$LOG" 2>&1 || true; }
+notify() { "$PYTHON_BIN" "$STABILITY_DIR/scripts/ha_notify.py" "$1" "$2" >> "$LOG" 2>&1 || true; }
 
 do_backup() {
   log "backup: start"

@@ -6,17 +6,19 @@
 # - prunes old backups when /data free is below DISK_MIN_MB, then alerts
 # - sends HA persistent notification + mobile_app push when possible
 set -u
-H=/data/data/com.termux/files/home
-P=/data/data/com.termux/files/usr
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/../env.sh"
+H="$TERMUX_HOME"
+P="$TERMUX_PREFIX"
 export PATH="$P/bin:$PATH"
 export HOME="$H"
 export SVDIR="$P/var/service"
 export TMPDIR="$P/tmp"
 mkdir -p "$TMPDIR" "$H/stability/logs" "$H/stability/watchdog"
 
-LOG="$H/stability/logs/watchdog.log"
-STATE="${WD_STATE:-$H/stability/watchdog/state}"
-PROBE_URL="${WD_PROBE_URL:-http://127.0.0.1:8123/}"
+LOG="$LOG_DIR/watchdog.log"
+STATE="${WD_STATE:-$STABILITY_DIR/watchdog/state}"
+PROBE_URL="${WD_PROBE_URL:-$HA_URL}"
 INTERVAL=60
 FAIL_THRESHOLD=3
 COOLDOWN=1800

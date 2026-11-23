@@ -18,8 +18,10 @@
 # this script's directory and its parent (a repo checkout). Repo names are preferred, the
 # legacy names used on the original box (fix_ha_android.py, patch_d9.py, ...) still work.
 set -u
-H=/data/data/com.termux/files/home
-P=/data/data/com.termux/files/usr
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/../env.sh"
+H="$TERMUX_HOME"
+P="$TERMUX_PREFIX"
 export PATH="$P/bin:$PATH"
 export HOME="$H"
 export TMPDIR="$P/tmp"

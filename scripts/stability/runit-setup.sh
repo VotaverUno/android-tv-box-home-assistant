@@ -1,12 +1,14 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # C5: put Home Assistant under runit supervision (termux-services).
 set -u
-export PREFIX=/data/data/com.termux/files/usr
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+. "$SCRIPT_DIR/../env.sh"
+export PREFIX="$TERMUX_PREFIX"
 export PATH="$PREFIX/bin:$PATH"
-export HOME=/data/data/com.termux/files/home
+export HOME="$TERMUX_HOME"
 export TMPDIR="$PREFIX/tmp"
-export SVDIR="$PREFIX/var/service"
-export LOGDIR="$PREFIX/var/log"
+export SVDIR="$SVC_DIR"
+export LOGDIR="$SVLOGD_DIR"
 
 SVC="$SVDIR/hass"
 mkdir -p "$SVC" "$LOGDIR"

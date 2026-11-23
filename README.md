@@ -13,6 +13,7 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 > use the hardware checklist to see if your box qualifies.
 
 > Troubleshooting: [docs/Troubleshooting-EN.md](docs/Troubleshooting-EN.md)
+> Box disappears from LAN / services not starting after reboot: [docs/Network-Stability-EN.md](docs/Network-Stability-EN.md)
 
 ## Why this repo
 
@@ -164,6 +165,7 @@ MIT
 - 🏗 English architecture: [docs/Architecture-EN.md](docs/Architecture-EN.md)
 - 🧱 技术栈（分层清单 + 选型理由）: [docs/技术栈.md](docs/技术栈.md) · English: [docs/TechStack-EN.md](docs/TechStack-EN.md)
 - 🧺 **家电控制与语音排错（洗衣机/洗碗机/小爱）**: [docs/家电控制与语音排错.md](docs/家电控制与语音排错.md)
+- 📡 **盒子从局域网消失 / 重启后不自启**: [docs/盒子掉线与自启排错.md](docs/盒子掉线与自启排错.md)
 - 🧭 **移植指南（换一台盒子怎么改）**: [docs/移植指南.md](docs/移植指南.md)
 - 🔒 安全策略: [SECURITY.md](SECURITY.md)
 - 🤝 行为准则: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)

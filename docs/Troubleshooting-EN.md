@@ -148,6 +148,10 @@ switch/sensor/climate/cover/light/fan/water_heater domains.
 
 ## 4. 24/7 operation
 
+> **Box disappears from the LAN, or HA/SSH never starts after a reboot?**
+> See the dedicated guide: [Network-Stability-EN.md](Network-Stability-EN.md) — same-SSID multi-gateway,
+> Wi-Fi "fake online", stale Wi-Fi config, Termux:Boot not firing, manual recovery commands.
+
 | Symptom | Cause | Fix |
 |---|---|---|
 | HA web UI opens in ~20 s after `kill -9` | This is expected (runit supervision) | No action; if more than a minute, check `sv status hass` |

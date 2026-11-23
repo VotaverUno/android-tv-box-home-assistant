@@ -1,5 +1,7 @@
 # 贡献指南 / Contributing
 
+> **English**: [CONTRIBUTING.en.md](CONTRIBUTING.en.md)
+
 感谢你愿意帮忙！这个项目的目标是：**让任何一台闲置安卓盒子都能低成本跑起 Home Assistant**。
 
 ## 你可以贡献什么

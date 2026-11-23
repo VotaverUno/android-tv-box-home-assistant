@@ -1,5 +1,7 @@
 # 贡献者行为准则 / Contributor Covenant Code of Conduct
 
+> **English**: [CODE_OF_CONDUCT.en.md](CODE_OF_CONDUCT.en.md)
+
 > 本文件采用 [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/)
 > 的核心条款，适用于本仓库的 Issues、PR、Discussions 及任何与本项目相关的交流。
 

@@ -2,7 +2,7 @@
 
 [![Markdown links](https://github.com/VotaverUno/android-tv-box-home-assistant/actions/workflows/markdown-link-check.yml/badge.svg)](https://github.com/VotaverUno/android-tv-box-home-assistant/actions/workflows/markdown-link-check.yml)
 
-> **English**: [README.en.md](README.en.md) · [Getting Started (EN)](docs/GettingStarted-EN.md) · [Architecture (EN)](docs/Architecture-EN.md) · [**Troubleshooting (EN)**](docs/Troubleshooting-EN.md)
+> **English**: [README.en.md](README.en.md) · [Getting Started](docs/GettingStarted-EN.md) · [Architecture](docs/Architecture-EN.md) · [Troubleshooting](docs/Troubleshooting-EN.md) · [Contributing](CONTRIBUTING.en.md) · [Code of Conduct](CODE_OF_CONDUCT.en.md)
 
 把闲置的 **安卓电视盒子**（小米盒子 / 运营商盒子 / 各种 Android TV Box）
 变成一个 7×24 小时的 Home Assistant 服务器，并通过 **巴法云 → 米家 → 小爱同学**

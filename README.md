@@ -54,6 +54,7 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 ```
 
 - 📘 **English step-by-step guide**: [docs/GettingStarted-EN.md](docs/GettingStarted-EN.md)
+- 🧭 **Porting guide (bring this to another box)**: [docs/Porting-Guide-EN.md](docs/Porting-Guide-EN.md)
 - 📘 Chinese step-by-step guide: [docs/教程-安卓盒子装HomeAssistant.md](docs/教程-安卓盒子装HomeAssistant.md)
 
 - 🏗 Architecture (English): [docs/Architecture-EN.md](docs/Architecture-EN.md)
@@ -163,6 +164,7 @@ MIT
 - 🏗 English architecture: [docs/Architecture-EN.md](docs/Architecture-EN.md)
 - 🧱 技术栈（分层清单 + 选型理由）: [docs/技术栈.md](docs/技术栈.md) · English: [docs/TechStack-EN.md](docs/TechStack-EN.md)
 - 🧺 **家电控制与语音排错（洗衣机/洗碗机/小爱）**: [docs/家电控制与语音排错.md](docs/家电控制与语音排错.md)
+- 🧭 **移植指南（换一台盒子怎么改）**: [docs/移植指南.md](docs/移植指南.md)
 - 🔒 安全策略: [SECURITY.md](SECURITY.md)
 - 🤝 行为准则: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 

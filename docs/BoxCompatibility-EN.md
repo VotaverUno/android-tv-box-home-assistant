@@ -1,6 +1,6 @@
 # Box compatibility list (PRs welcome)
 
-> Tested box models that pass/fail. To contribute, add a row in the format below and open a PR.
+> Tested box models that pass/fail. Porting to a new box: see [Porting Guide](Porting-Guide-EN.md). To contribute, add a row in the format below and open a PR.
 
 | Model | CPU arch | RAM | Android | Status | Notes |
 |---|---|---|---|---|---|

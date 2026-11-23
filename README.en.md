@@ -51,6 +51,7 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 ```
 
 - 📘 **English step-by-step guide**: [docs/GettingStarted-EN.md](docs/GettingStarted-EN.md)
+- 🧭 **Porting guide (bring this to another box)**: [docs/Porting-Guide-EN.md](docs/Porting-Guide-EN.md)
 - 📘 Chinese step-by-step guide: [docs/教程-安卓盒子装HomeAssistant.md](docs/教程-安卓盒子装HomeAssistant.md)
 
 - 🏗 Architecture (English): [docs/Architecture-EN.md](docs/Architecture-EN.md)

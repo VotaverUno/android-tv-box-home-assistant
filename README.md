@@ -1,5 +1,8 @@
 # 旧安卓电视盒子跑 Home Assistant + 小爱语音控制美的/海尔（免刷机、免 root）
+
 [![Markdown links](https://github.com/VotaverUno/android-tv-box-home-assistant/actions/workflows/markdown-link-check.yml/badge.svg)](https://github.com/VotaverUno/android-tv-box-home-assistant/actions/workflows/markdown-link-check.yml)
+
+> **English**: [README.en.md](README.en.md) · [Getting Started (EN)](docs/GettingStarted-EN.md) · [Architecture (EN)](docs/Architecture-EN.md) · [**Troubleshooting (EN)**](docs/Troubleshooting-EN.md)
 
 把闲置的 **安卓电视盒子**（小米盒子 / 运营商盒子 / 各种 Android TV Box）
 变成一个 7×24 小时的 Home Assistant 服务器，并通过 **巴法云 → 米家 → 小爱同学**

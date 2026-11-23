@@ -9,6 +9,8 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 > All pitfalls, working versions and compile-free patches are documented. **Not tied to one model** —
 > use the hardware checklist to see if your box qualifies.
 
+> Troubleshooting: [docs/Troubleshooting-EN.md](docs/Troubleshooting-EN.md)
+
 ## Why this repo
 
 - Most guides assume 64-bit + Raspberry Pi; **most idle boxes are 32-bit armv7** with 2 GB RAM.

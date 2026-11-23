@@ -1,41 +1,43 @@
-# 贡献指南 / Contributing
+# Contributing
 
-> **English**: [CONTRIBUTING.en.md](CONTRIBUTING.en.md)
+> **中文**: [CONTRIBUTING.zh-CN.md](CONTRIBUTING.zh-CN.md)
 
-感谢你愿意帮忙！这个项目的目标是：**让任何一台闲置安卓盒子都能低成本跑起 Home Assistant**。
+Thanks for wanting to help! The goal of this project is simple: **make any idle Android TV box
+run Home Assistant at low cost.**
 
-## 你可以贡献什么
+## What you can contribute
 
-- 🐞 报告 bug（用 Issue 模板，附日志）
-- 🧪 提供新盒子型号的实测结果（型号 / ABI / 内存 / 存储 / 是否成功）
-- 📱 新增设备品牌接入方案（美的/海尔之外的品牌）
-- 📘 改进教程、翻译（英文/其他语言）
-- 🛠 优化脚本、修复兼容性问题
+- 🐞 Bug reports (use the issue template, include logs)
+- 🧪 Test results for new box models (model / ABI / RAM / storage / success or failure)
+- 📱 Integration recipes for other brands (beyond Midea / Haier)
+- 📘 Tutorial improvements and translations (English / other languages)
+- 🛠 Script optimizations and compatibility fixes
 
-## 提交 Issue 前
+## Before opening an issue
 
-1. 先读教程的「故障排查」章节；
-2. 先搜索现有 Issues；
-3. **日志/截图里删除 IP、MAC、账号、密码、token、UID**。
+1. Read the troubleshooting chapter of the tutorial first;
+2. Search existing issues;
+3. **Remove IPs, MAC addresses, accounts, passwords, tokens and UIDs** from logs/screenshots.
 
-## 提交 PR 前
+## Before opening a pull request
 
-1. 一个 PR 只做一件事；
-2. 脚本改动请在**真实盒子**上跑一次；
-3. 文档同步更新；
-4. **不要提交任何隐私信息**：IP、MAC、序列号、账号、密码、token、巴法云 UID、设备 key；
-5. 提交信息建议：`fix: ...` / `feat: ...` / `docs: ...`。
+1. One concern per PR;
+2. Script changes should be tested on a **real box**;
+3. Update the documentation together with the code;
+4. **Never commit private information**: IPs, MACs, serial numbers, accounts, passwords,
+   tokens, Bemfa UID, device keys;
+5. Suggested commit messages: `fix: ...` / `feat: ...` / `docs: ...`.
 
-## 素材规范
+## Assets
 
-- 截图放 `docs/images/`，命名见该目录 README；
-- 新增大图请压缩（单张 < 300KB）；
-- 不提交 APK、固件、官方 App 安装包（只放官方下载链接）。
+- Put screenshots in `docs/images/`, naming rules are in that directory's README;
+- Compress large images (keep each under ~300 KB);
+- Do not commit APKs, firmware or vendor app installers — link to the official download page instead.
 
-## 行为准则
+## Code of conduct
 
-- 友善交流，对事不对人；
-- 不讨论破解/绕过付费/攻击他人设备等违法内容；
-- 涉及第三方协议的内容，请遵守对应平台用户协议。
+- Be friendly; discuss the work, not the person;
+- No cracking, paid-feature bypassing, or attacks on other people's devices;
+- For anything involving third-party protocols, respect the platform's terms of service.
 
-谢谢你的贡献！
+Thanks for contributing!

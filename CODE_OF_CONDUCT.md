@@ -1,54 +1,65 @@
-# 贡献者行为准则 / Contributor Covenant Code of Conduct
+# Contributor Covenant Code of Conduct
 
-> **English**: [CODE_OF_CONDUCT.en.md](CODE_OF_CONDUCT.en.md)
+> **中文**: [CODE_OF_CONDUCT.zh-CN.md](CODE_OF_CONDUCT.zh-CN.md)
 
-> 本文件采用 [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/)
-> 的核心条款，适用于本仓库的 Issues、PR、Discussions 及任何与本项目相关的交流。
+> This file follows the core terms of [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+> It applies to this repository's issues, pull requests, discussions and any communication
+> related to the project.
 
-## 我们的承诺
+## Our pledge
 
-为了营造开放、友好、包容的环境，我们作为贡献者和维护者承诺：参与本项目的每个人都不受
-年龄、体型、可见或不可见的残障、族裔、性别特征、性别认同与表达、经验水平、教育程度、
-社会经济状况、国籍、个人外貌、种族、宗教或性取向的骚扰。
+We as members, contributors and maintainers pledge to make participation in this project a
+harassment-free experience for everyone, regardless of age, body size, visible or invisible
+disability, ethnicity, sex characteristics, gender identity and expression, level of
+experience, education, socio-economic status, nationality, personal appearance, race,
+religion, or sexual identity and orientation.
 
-我们承诺以促进开放、欢迎、多元、包容、健康社区的方式行事和互动。
+We pledge to act and interact in ways that contribute to an open, welcoming, diverse,
+inclusive and healthy community.
 
-## 我们的标准
+## Our standards
 
-有助于营造积极环境的行为包括：
+Examples of behavior that contributes to a positive environment:
 
-- 对他人展现同理心和善意；
-- 尊重不同的意见、观点和经历；
-- 给予建设性反馈，并优雅地接受反馈；
-- 承担责任，向受我们错误影响的人道歉，并从经验中学习；
-- 关注对整个社区最有利的事情，而不仅仅是对个人有利的事情。
+- demonstrating empathy and kindness toward other people;
+- being respectful of differing opinions, viewpoints and experiences;
+- giving and gracefully accepting constructive feedback;
+- accepting responsibility and apologizing to those affected by our mistakes, and learning
+  from the experience;
+- focusing on what is best for the community, not just for ourselves.
 
-不可接受的行为包括：
+Examples of unacceptable behavior:
 
-- 使用性化的语言或图像，以及任何形式的性关注或性暗示；
-- 钓鱼、侮辱或贬损性评论，以及人身或政治攻击；
-- 公开或私下的骚扰；
-- 在未经明确许可的情况下发布他人的私人信息（如真实姓名、地址、邮箱、账号、IP/MAC、
-  设备序列号等）；
-- 其他在专业环境中可被合理认定为不当的行为。
+- the use of sexualized language or imagery, and sexual attention or advances of any kind;
+- trolling, insulting or derogatory comments, and personal or political attacks;
+- public or private harassment;
+- publishing others' private information (real name, address, email, account, IP/MAC,
+  device serial number, etc.) without explicit permission;
+- other conduct which could reasonably be considered inappropriate in a professional setting.
 
-## 维护者的责任
+## Maintainer responsibilities
 
-维护者有责任澄清并执行可接受行为的标准，并将针对不可接受行为的适当且公平的纠正措施。
-维护者有权利和义务删除、编辑或拒绝与本行为准则不符的评论、提交、代码、Issue 和其他贡献，
-并在适当时说明理由。
+Maintainers are responsible for clarifying and enforcing acceptable behavior, and will take
+appropriate and fair corrective action in response to any behavior they deem inappropriate.
 
-## 适用范围
+Maintainers have the right and responsibility to remove, edit, or reject comments, commits,
+code, issues and other contributions that are not aligned with this Code of Conduct, and will
+communicate reasons for moderation decisions when appropriate.
 
-本行为准则适用于所有项目空间，也适用于个人在公共空间正式代表项目时。
+## Scope
 
-## 执行
+This Code of Conduct applies within all project spaces, and also applies when an individual is
+officially representing the project in public spaces.
 
-如遇辱骂、骚扰或其他不可接受的行为，可通过 GitHub Security Advisories 或维护者
-GitHub 主页上的邮箱私下联系项目维护者。所有投诉将被及时、公平地审查和调查。
+## Enforcement
 
-维护者有义务尊重事件报告者的隐私和安全。
+Instances of abusive, harassing or otherwise unacceptable behavior may be reported privately
+to the project maintainers via GitHub Security Advisories or the email shown on the
+maintainer's GitHub profile. All complaints will be reviewed and investigated promptly and
+fairly.
 
-## 归属
+Maintainers are obligated to respect the privacy and safety of the reporter of any incident.
 
-本行为准则改编自 [Contributor Covenant](https://www.contributor-covenant.org) v2.1。
+## Attribution
+
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), v2.1.

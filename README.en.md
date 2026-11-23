@@ -60,7 +60,7 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 - 🧾 Box compatibility list: [docs/盒子型号适配表.md](docs/盒子型号适配表.md)
 - 📝 Changelog: [CHANGELOG.md](CHANGELOG.md)
 - 🔒 Security policy: [SECURITY.md](SECURITY.md)
-- 🤝 Code of Conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- 🤝 Code of Conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) (中文: [zh-CN](CODE_OF_CONDUCT.zh-CN.md))
 
 ## Demo (static screenshot evidence)
 
@@ -87,6 +87,8 @@ No video needed — a timestamp-aligned screenshot chain proves the voice round-
 More screenshots live in `docs/images/` (`07-xiaoai-history`, `08-dishwasher`).
 
 ## Scripts
+
+Chinese versions: [CODE_OF_CONDUCT.zh-CN.md](CODE_OF_CONDUCT.zh-CN.md), [CONTRIBUTING.zh-CN.md](CONTRIBUTING.zh-CN.md)
 
 See [scripts/README.md](scripts/README.md): 32-bit shims, Android platform patch, DNS fix,
 Midea D9 patch, HA start script, runit setup, backup / self-test / rollback, Bemfa cleanup, HA WebSocket helper.

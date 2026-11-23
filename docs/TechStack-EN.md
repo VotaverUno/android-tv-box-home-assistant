@@ -124,7 +124,7 @@ flowchart TB
 | ulid-transform | no armv7 wheel | pure-Python ULID |
 | fnv-hash-fast | no armv7 wheel | pure-Python FNV |
 | uv (resolver) | no armv7 wheel | shim: skip satisfied deps + forward `--constraint` |
-| cryptography/bcrypt/pillow/numpy/grpcio/psutil | build time / OOM | use Termux prebuilt packages |
+| cryptography/bcrypt/pillow/numpy/grpcio/psutil | build time / OOM | Termux prebuilt packages, inherited via venv `--system-site-packages` (**cryptography has no pure-Python replacement — it cannot be shimmed**) |
 | pip index | slow in China | Tsinghua mirror |
 
 **Effect**: installs went from "fails / hangs for minutes" to workable; cold start **361 s → 38.8 s**.

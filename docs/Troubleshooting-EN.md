@@ -62,6 +62,19 @@ Trim the config: remove `default_config`, keep `recorder` minimal or disabled.
 On the reference box this changed cold start from **~361 s to ~39 s**.
 Also disable unused TV-box apps so they don't compete for RAM.
 
+### ImportError: cryptography `_rust.abi3.so` / pip tries to build cryptography
+
+`cryptography` is a Rust extension and **must** come from a real binary. On Termux:
+
+```bash
+pkg install -y python-cryptography
+~/ha-venv/bin/python -c "import cryptography; print(cryptography.__version__, cryptography.__file__)"
+```
+
+The venv must be created with `--system-site-packages` so it inherits the Termux package.
+Never write a fake `cryptography` shim: it would break TLS/token handling at runtime instead of
+failing fast.
+
 ### HA starts, but some entities are missing
 
 Check `~/.homeassistant/home-assistant.log` (or `~/ha.log` in this setup) for:

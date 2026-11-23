@@ -43,6 +43,21 @@ flowchart TB
 
 ---
 
+## 2.5 Hard binary dependencies (cannot be shimmed — the platform must provide them)
+
+| Package | Used for | How to get it | Why it cannot be shimmed |
+|---|---|---|---|
+| **cryptography** | TLS / crypto / hashing; core HA dependency | Termux `pkg install python-cryptography`; Debian `apt install python3-cryptography`; or a matching-arch wheel | Rust implementation; a pure-Python stand-in is slow and unsafe, and HA fails at import |
+| bcrypt | password hashing | same (system package) | C extension |
+| pillow / numpy / grpcio / psutil | images / numeric / gRPC / processes | same | C/C++ extensions; 32-bit builds easily OOM |
+
+**Check on the target machine:**
+```bash
+python -c "import cryptography; print(cryptography.__version__, cryptography.__file__)"
+```
+- A path under the **system site-packages** (e.g. Termux `/data/data/com.termux/files/usr/lib/python3.14/site-packages`) means it comes from the OS package; the venv must use `--system-site-packages` to inherit it.
+- `_rust.abi3.so: wrong ELF class` / module not found → that platform has no matching binary. Install it from the package manager; if nothing exists, the machine cannot run HA Core.
+
 ## 3. Component reference: symptom → script
 
 | Symptom | Component | Verify |

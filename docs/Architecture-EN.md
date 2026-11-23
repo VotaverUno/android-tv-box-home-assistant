@@ -162,12 +162,12 @@ flowchart TB
         RUNIT["runit supervision"]
         RUNIT -->|"process exits"| R1["restart HA within seconds"]
     end
-    subgraph L2["L2 service level (design)"]
+    subgraph L2["L2 service level (implemented)"]
         PROBE["health probe (every 60 s)"]
         PROBE -->|"8123 unresponsive 3x"| R2["sv restart hass"]
         R2 --> COOL["30-minute cooldown<br/>prevent restart storms"]
     end
-    subgraph L3["L3 resource level (design)"]
+    subgraph L3["L3 resource level (implemented)"]
         MEM["memory check (every 5 min)"]
         MEM -->|"MemAvailable below threshold"| GC["restart HA / disable heavy integrations"]
         DISK["disk check"]
@@ -177,10 +177,10 @@ flowchart TB
         BOOT["Termux:Boot → runit"]
         BOOT --> RUNIT
     end
-    subgraph L5["L5 observability (partial)"]
-        SELFTEST["11-check self-test"]
+    subgraph L5["L5 observability / alerting (implemented)"]
+        SELFTEST["17-check self-test / scheduled backup / restore drill"]
         LOG["log rotation"]
-        ALERT["alerting (planned)"]
+        ALERT["alerting (Bemfa WeChat / HA notification)"]
     end
     L4 --> L1 --> L2 --> L3 --> L5
 ```
@@ -206,11 +206,13 @@ becomes the outage (restart storm).
 | runit process supervision | ✅ implemented and tested (`kill -9` → web UI back in ~20 s) |
 | Termux:Boot autostart | ✅ implemented (simulated; real power-cycle test pending) |
 | Log rotation (logrotate + daily runit job) | ✅ implemented |
-| Backups (script, keep 4) | ✅ implemented; scheduled job pending |
-| 11-check self-test / one-command rollback | ✅ implemented |
-| 8123 health probe + auto restart (with cooldown) | 🧩 designed, not implemented |
-| Memory/disk threshold watchdog | 🧩 designed, not implemented |
-| Alerting (Bemfa / HA app) | 🧩 planned |
+| Backups (script, keep 4) | ✅ implemented |
+| **Scheduled backup (weekly) + restore drill (monthly)** | ✅ implemented (runit service `backup`) |
+| **Upgrade runbook (snapshot → re-patch → self-test → rollback)** | ✅ implemented (`upgrade.sh`) |
+| 17-check self-test / one-command rollback | ✅ implemented |
+| 8123 health probe + auto restart (with cooldown) | ✅ implemented (60 s probe / 3 failures / 30 min cooldown / 300 s startup grace) |
+| Memory/disk threshold watchdog | ✅ implemented (restart if memory < 120 MB; clean old backups and alert if disk < 2 GB) |
+| Alerting (Bemfa WeChat / HA notification) | ✅ implemented (WeChat push requires binding WeChat in Bemfa; iOS push needs Nabu Casa, otherwise use HA persistent notifications) |
 
 ---
 

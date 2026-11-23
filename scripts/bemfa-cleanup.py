@@ -11,14 +11,17 @@ Usage (run on the box, network required):
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
-STORAGE = Path("/data/data/com.termux/files/home/.homeassistant/.storage")
-LIST_URL = "http://apis.bemfa.com/vb/api/v2/allTopic?openID={uid}&type={type}"
+STORAGE = Path(os.environ.get("HA_CONFIG", Path.home() / ".homeassistant")) / ".storage"
+# HTTPS: the UID/openID is a secret (it controls every device on the account)
+LIST_URL = "https://apis.bemfa.com/vb/api/v2/allTopic?{query}"
 DELETE_URL = "https://pro.bemfa.com/v1/deleteTopic"
 HA_TOPIC_RE = re.compile(r"^ha[0-9a-f]{12}\d{3}$")
 TYPES = (7, 3)
@@ -42,7 +45,10 @@ def main() -> int:
     dry_run = "--dry-run" in sys.argv
 
     config_entries = json.loads((STORAGE / "core.config_entries").read_text(encoding="utf-8"))
-    entry = next(e for e in config_entries["data"]["entries"] if e["domain"] == "bemfa_cloud")
+    entry = next((e for e in config_entries["data"]["entries"] if e["domain"] == "bemfa_cloud"), None)
+    if entry is None:
+        print(f"ERROR: no bemfa_cloud config entry in {STORAGE / 'core.config_entries'}", file=sys.stderr)
+        return 1
     uid = entry["data"]["uid"]
     keep = set(entry["options"]["config"].keys())
     print(f"keep ({len(keep)}):")
@@ -52,7 +58,8 @@ def main() -> int:
     stale: list[tuple[int, str, str]] = []
     for topic_type in TYPES:
         try:
-            data = http_get_json(LIST_URL.format(uid=uid, type=topic_type))
+            query = urllib.parse.urlencode({"openID": uid, "type": topic_type})
+            data = http_get_json(LIST_URL.format(query=query))
         except Exception as exc:  # noqa: BLE001
             print(f"list type={topic_type} failed: {type(exc).__name__}: {exc}")
             continue

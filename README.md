@@ -65,7 +65,11 @@
 
 | 老盒子实拍（接入显示器） | HA 概览（7 个区域） |
 |---|---|
-| ![架构图](docs/images/09-architecture.png) | ![HA 概览](docs/images/02-ha-dashboard.png) |
+| ![盒子实拍](docs/images/01-box.jpg) | ![HA 概览](docs/images/02-ha-dashboard.png) |
+
+| 一句话控制链路（小爱 → 米家 → 巴法云 → HA → 空调） | 整体架构 |
+|---|---|
+| ![控制链路](docs/images/10-xiaoai-midea-flow.jpg) | ![架构图](docs/images/09-architecture.png) |
 
 | 小爱真实对话（21:20 执行成功） | HA 里空调同步变化（25.0°C） |
 |---|---|
@@ -79,9 +83,10 @@
 
 | 文件名 | 拍什么 | 作用 |
 |---|---|---|
-| `01-box.jpg` | 🎁 盒子实物（接电视/投影） | 证明"真的是老盒子" |
+| `01-box.jpg` | 🎁 盒子实物（接入显示器） | 证明"真的是老盒子" |
 | `02-ha-dashboard.png` | HA 概览页（含空调/洗碗机/洗衣机卡片） | 证明 HA 跑起来了 |
-| `03-xiaoai-command.jpg` | 米家 App → 小爱音箱 → **对话记录**里"打开客厅空调" | 证明语音指令被识别执行 |
+| `03-xiaoai-command.png` | 米家 App → 小爱音箱 → **对话记录**里"打开客厅空调" | 证明语音指令被识别执行 |
+
 ## 硬件自检（不绑定型号）
 
 | 检查项 | 要求 | 命令/方法 |
@@ -100,10 +105,6 @@
 - 🤖 也可以让 AI 助手逐条带你执行（DeepSeek / ChatGPT / Claude / **DSH（DeepSeek Harness）** 均可），
   提示词模板见教程第 14 章「卡住了怎么求助」；
 - ⚠️ 任何时候都**不要**把账号、密码、token、IP、MAC 发给任何人或 AI。
-
-## 文档
-
-## 文档
 
 ## 反馈与贡献
 

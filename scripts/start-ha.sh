@@ -1,7 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # start-ha.sh (venv based) - start HA with a complete Termux build/runtime environment.
-# Also pre-installs any still-missing requirement (pymicro-vad) while the compiler is
-# reachable via PATH (that was the "Permission denied: arm-linux-androideabi-clang++" cause).
+# If a still-missing requirement (pymicro-vad) is not installed yet, install it once while
+# the compiler is reachable via PATH (that was the "Permission denied:
+# arm-linux-androideabi-clang++" cause). Normal starts skip pip entirely.
 export PREFIX=/data/data/com.termux/files/usr
 export HOME=/data/data/com.termux/files/home
 export PATH=$PREFIX/bin:$PREFIX/bin/applets:/system/bin
@@ -10,12 +11,27 @@ export TMPDIR=$PREFIX/tmp
 export TERM=xterm-256color
 export PIP_DEFAULT_TIMEOUT=120
 export PIP_RETRIES=5
+VENV="$HOME/ha-venv"
+LOG="$HOME/ha.log"
+PYMICRO_VAD_VERSION="${PYMICRO_VAD_VERSION:-1.0.1}"
 cd "$HOME" || exit 1
 
 command -v termux-wake-lock >/dev/null 2>&1 && termux-wake-lock || true
 
-echo "== ensure pymicro-vad ==" >>"$HOME/ha.log"
-./ha-venv/bin/pip install --quiet "pymicro-vad==1.0.1" >>"$HOME/ha.log" 2>&1 && echo "pymicro-vad ok" >>"$HOME/ha.log" || echo "pymicro-vad FAILED" >>"$HOME/ha.log"
+# importlib.metadata is cheap (no network, no compiler); only call pip when the pinned
+# version is really missing.
+if "$VENV/bin/python" - "$PYMICRO_VAD_VERSION" <<'PY' >/dev/null 2>&1
+import sys
+from importlib.metadata import version
+sys.exit(0 if version("pymicro-vad") == sys.argv[1] else 1)
+PY
+then
+  echo "== pymicro-vad $PYMICRO_VAD_VERSION present ==" >>"$LOG"
+else
+  echo "== installing pymicro-vad==$PYMICRO_VAD_VERSION ==" >>"$LOG"
+  "$VENV/bin/pip" install --quiet "pymicro-vad==$PYMICRO_VAD_VERSION" >>"$LOG" 2>&1 \
+    && echo "pymicro-vad ok" >>"$LOG" || echo "pymicro-vad FAILED (HA will retry on demand)" >>"$LOG"
+fi
 
-echo "== starting hass ==" >>"$HOME/ha.log"
-exec ./ha-venv/bin/hass --config "$HOME/.homeassistant" >>"$HOME/ha.log" 2>&1
+echo "== starting hass $(date '+%F %T') ==" >>"$LOG"
+exec "$VENV/bin/hass" --config "$HOME/.homeassistant" >>"$LOG" 2>&1

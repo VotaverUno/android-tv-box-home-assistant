@@ -1,11 +1,22 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Upgrade runbook for Home Assistant on this box.
 #   --preflight        snapshot config/patches/versions + backup
-#   --upgrade [ver]    pip install homeassistant (latest or pinned), then repatch+verify
-#   --repatch          re-apply Android/D9/mobile_app/shims patches
+#   --upgrade [ver]    install homeassistant (latest or pinned) safely, repatch, restart
+#   --repatch          re-apply Android/DNS/D9/mobile_app/shims patches
 #   --verify           self-test + config check + wait for :8123
 #   --rollback [--dry-run]   restore config + old HA version, then verify
-#   --all [ver]        preflight -> upgrade -> repatch -> verify (auto rollback on failure if --yes)
+#   --all [ver] [--yes]      preflight -> upgrade(+repatch) -> verify (auto rollback if --yes)
+#
+# Safe install order (avoids on-device Rust builds and an unpatched restart):
+#   1. pip install --no-deps homeassistant==NEW   (only HA itself)
+#   2. repatch: platform check, sitecustomize, mobile_app, D9, and the 32-bit shims,
+#      re-generated with the versions NEW pins (read from its metadata)
+#   3. pip install homeassistant==NEW             (remaining deps; shims now satisfy pins)
+#   4. restart
+#
+# Patch scripts are looked up (first hit wins) in $HA_PATCH_DIR (default ~), ~/stability/scripts,
+# this script's directory and its parent (a repo checkout). Repo names are preferred, the
+# legacy names used on the original box (fix_ha_android.py, patch_d9.py, ...) still work.
 set -u
 H=/data/data/com.termux/files/home
 P=/data/data/com.termux/files/usr
@@ -18,17 +29,44 @@ PIP="$VENV/bin/pip"
 CFG="$H/.homeassistant"
 UP="$H/stability/upgrades"
 LOG="$H/stability/logs/upgrade.log"
+SELF_DIR=$(cd "$(dirname "$0")" && pwd)
+export SVDIR="${SVDIR:-$P/var/service}"
 mkdir -p "$UP" "$TMPDIR" "$(dirname "$LOG")"
 
-log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG"; }
+log() { printf '%s %s\n' "$(date '+%F %T')" "$*" | tee -a "$LOG" >&2; }
 die() { log "ERROR: $*"; exit 1; }
+
+find_script() {
+  local n d
+  for n in "$@"; do
+    for d in "${HA_PATCH_DIR:-$H}" "$H/stability/scripts" "$SELF_DIR" "$SELF_DIR/.."; do
+      [ -f "$d/$n" ] && { echo "$d/$n"; return 0; }
+    done
+  done
+  return 1
+}
+S_PLATFORM() { find_script patch-android-platform.py fix_ha_android.py; }
+S_D9()       { find_script patch-midea-d9-default.py patch_d9.py; }
+S_D9PROG()   { find_script patch-d9-programs.py; }
+S_MOBILE()   { find_script patch-mobile-app-manifest.py patch_mobile_app.sh; }
+S_SHIMS()    { find_script shims-32bit.py shims32.py; }
+S_SITE()     { find_script sitecustomize.py; }
 
 current_version() { "$PIP" show homeassistant 2>/dev/null | awk '/^Version:/{print $2}'; }
 latest_dir() { ls -1d "$UP"/2* 2>/dev/null | sort | tail -1; }
-sitecustomize_path() { ls -1 "$VENV"/lib/python3.*/site-packages/sitecustomize.py 2>/dev/null | head -1; }
+sitecustomize_path() { "$PY" -c 'import sysconfig;print(sysconfig.get_paths()["purelib"]+"/sitecustomize.py")'; }
+
+run_patch() {  # run_patch <label> <script> ; .sh via bash, everything else via venv python
+  local label="$1" script="$2"
+  log "repatch: $label ($script)"
+  case "$script" in
+    *.sh) bash "$script" >> "$LOG" 2>&1 ;;
+    *)    "$PY" "$script" >> "$LOG" 2>&1 ;;
+  esac
+}
 
 preflight() {
-  local ts d
+  local ts d s
   ts=$(date +%Y%m%d%H%M%S); d="$UP/$ts"; mkdir -p "$d"
   echo "$d" > "$UP/last"
   log "preflight: dir=$d"
@@ -37,11 +75,10 @@ preflight() {
   "$PY" --version > "$d/python.txt" 2>&1 || true
   "$PIP" freeze > "$d/pip-freeze.txt" 2>&1 || true
   local sc; sc=$(sitecustomize_path)
-  [ -n "$sc" ] && cp -f "$sc" "$d/sitecustomize.py"
-  cp -f "$H/fix_ha_android.py" "$d/" 2>/dev/null || true
-  cp -f "$H/patch_d9.py" "$d/" 2>/dev/null || true
-  cp -f "$H/patch_mobile_app.sh" "$d/" 2>/dev/null || true
-  cp -f "$H/shims32.py" "$d/" 2>/dev/null || true
+  [ -f "$sc" ] && cp -f "$sc" "$d/sitecustomize.py"
+  for s in "$(S_PLATFORM)" "$(S_D9)" "$(S_D9PROG)" "$(S_MOBILE)" "$(S_SHIMS)"; do
+    [ -n "$s" ] && cp -f "$s" "$d/" 2>/dev/null
+  done
   cp -f "$CFG/custom_components/midea_ac_lan/midea_devices.py" "$d/midea_devices.py" 2>/dev/null || true
   local man; man=$(ls -1 "$VENV"/lib/python3.*/site-packages/homeassistant/components/mobile_app/manifest.json 2>/dev/null | head -1)
   [ -n "$man" ] && cp -f "$man" "$d/mobile_app_manifest.json"
@@ -55,35 +92,53 @@ preflight() {
   echo "$d"
 }
 
+shims_needed() {
+  # shims are only for 32-bit boxes: run when they are already in use or a module is missing
+  ls "$VENV"/lib/python3.*/site-packages/*.dist-info/INSTALLER 2>/dev/null \
+    | xargs grep -l '^shims32' >/dev/null 2>&1 && return 0
+  "$PY" -c 'import orjson, ulid_transform, fnv_hash_fast' >/dev/null 2>&1 || return 0
+  return 1
+}
+
 repatch() {
-  log "repatch: android platform"
-  "$PY" "$H/fix_ha_android.py" >> "$LOG" 2>&1 || die "repatch: platform patch failed"
-  local d sc; d=$(latest_dir)
-  sc=$(sitecustomize_path)
-  if [ -n "$sc" ] && [ -f "$d/sitecustomize.py" ]; then
-    cp -f "$d/sitecustomize.py" "$sc" && log "repatch: sitecustomize restored"
+  local s d sc
+  s=$(S_PLATFORM) || die "repatch: patch-android-platform.py not found"
+  run_patch "android platform" "$s" || die "repatch: platform patch failed"
+
+  sc=$(sitecustomize_path); d=$(latest_dir)
+  if [ -n "$d" ] && [ -f "$d/sitecustomize.py" ]; then s="$d/sitecustomize.py"; else s=$(S_SITE || true); fi
+  if [ -n "$s" ]; then
+    if cmp -s "$s" "$sc"; then log "repatch: sitecustomize ok"; else cp -f "$s" "$sc" && log "repatch: sitecustomize installed from $s"; fi
+  else
+    log "repatch: WARNING sitecustomize.py not found - cloud logins will fail"
   fi
-  log "repatch: midea D9"
-  "$PY" "$H/patch_d9.py" >> "$LOG" 2>&1 || log "repatch: D9 patch failed (continuing)"
-  log "repatch: midea D9 program select/buttons"
-  "$PY" "$H/stability/scripts/patch-d9-programs.py" >> "$LOG" 2>&1 || log "repatch: D9 program patch failed (continuing)"
-  log "repatch: mobile_app manifest"
-  bash "$H/patch_mobile_app.sh" >> "$LOG" 2>&1 || log "repatch: mobile_app patch failed (continuing)"
-  log "repatch: 32-bit shims"
-  if "$PY" - <<'PY' >>"$LOG" 2>&1
-import importlib
-for name in ("orjson", "ulid_transform", "fnv_hash_fast", "uv"):
-    try:
-        importlib.import_module(name)
-        print("shim ok:", name)
-    except Exception as exc:
-        print("shim MISSING:", name, exc)
-        raise SystemExit(1)
-PY
-  then log "repatch: shims ok"; else
-    log "repatch: shims missing, reinstalling"; "$PY" "$H/shims32.py" >> "$LOG" 2>&1 || die "repatch: shims install failed"
+
+  if s=$(S_MOBILE); then run_patch "mobile_app manifest" "$s" || log "repatch: mobile_app patch failed (continuing)"; fi
+  if s=$(S_D9); then run_patch "midea D9" "$s" || log "repatch: D9 patch failed (continuing)"; fi
+  if s=$(S_D9PROG); then run_patch "midea D9 programs" "$s" || log "repatch: D9 program patch failed (continuing)"; fi
+
+  if shims_needed; then
+    s=$(S_SHIMS) || die "repatch: shims-32bit.py not found"
+    run_patch "32-bit shims (versions from installed homeassistant)" "$s" || die "repatch: shims install failed"
+    "$PY" -c 'import orjson, ulid_transform, fnv_hash_fast, uv' >> "$LOG" 2>&1 || die "repatch: shims not importable"
+  else
+    log "repatch: native orjson/ulid/fnv present, shims not needed"
   fi
   log "repatch: done"
+}
+
+install_ha() {  # install_ha <version|""> ; HA first without deps, repatch, then deps
+  local ver="${1:-}" spec
+  if [ -n "$ver" ]; then
+    "$PIP" install --no-deps "homeassistant==$ver" >> "$LOG" 2>&1 || die "install: pip install --no-deps homeassistant==$ver failed"
+  else
+    "$PIP" install --no-deps -U homeassistant >> "$LOG" 2>&1 || die "install: pip install --no-deps -U homeassistant failed"
+  fi
+  spec="homeassistant==$(current_version)"
+  log "install: $spec installed (no deps), repatching before resolving dependencies"
+  repatch
+  "$PIP" install "$spec" >> "$LOG" 2>&1 || die "install: dependency install for $spec failed (see $LOG)"
+  log "install: dependencies ok for $spec"
 }
 
 wait_web() {
@@ -112,25 +167,30 @@ verify() {
 }
 
 restart_hass() {
-  export SVDIR
-  if sv status hass >/dev/null 2>&1; then sv restart hass >> "$LOG" 2>&1; else "$H/start-ha-env.sh" >> "$LOG" 2>&1 & fi
+  local s
+  if sv status hass >/dev/null 2>&1; then
+    log "restart: sv restart hass"
+    sv restart hass >> "$LOG" 2>&1
+  elif s=$(find_script start-ha.sh start-ha-env.sh); then
+    log "restart: no runit service, starting $s in background"
+    pkill -f "$VENV/bin/hass" 2>/dev/null; sleep 3
+    nohup bash "$s" >/dev/null 2>&1 &
+  else
+    die "restart: neither runit service 'hass' nor start-ha.sh found"
+  fi
 }
 
 do_upgrade() {
   local ver="${1:-}" old
   old=$(current_version)
   log "upgrade: $old -> ${ver:-latest}"
-  if [ -n "$ver" ]; then
-    "$PIP" install "homeassistant==$ver" >> "$LOG" 2>&1 || die "upgrade: pip install failed"
-  else
-    "$PIP" install -U homeassistant >> "$LOG" 2>&1 || die "upgrade: pip install -U failed"
-  fi
+  install_ha "$ver"
   log "upgrade: installed $(current_version)"
   restart_hass
 }
 
 do_rollback() {
-  local dry="${1:-}" d old ver arch
+  local dry="${1:-}" d ver arch
   d=$(latest_dir); [ -n "$d" ] || die "rollback: no upgrade snapshot"
   ver=$(awk '/^Version:/{print $2}' "$d/pip-homeassistant.txt" 2>/dev/null)
   arch=$(cat "$d/backup.txt" 2>/dev/null)
@@ -144,9 +204,10 @@ do_rollback() {
   tar xzf "$arch" -C "$H" >> "$LOG" 2>&1 || die "rollback: restore failed"
   if [ -n "${ver:-}" ]; then
     log "rollback: reinstalling homeassistant==$ver"
-    "$PIP" install "homeassistant==$ver" >> "$LOG" 2>&1 || die "rollback: pip install failed"
+    install_ha "$ver"
+  else
+    repatch
   fi
-  repatch
   restart_hass
   verify && log "rollback: PASS" || die "rollback: still failing after rollback"
 }
@@ -158,14 +219,19 @@ case "${1:-}" in
   --upgrade) do_upgrade "${2:-}" ;;
   --rollback) do_rollback "${2:-}" ;;
   --all)
-    ver="${2:-}"; yes=""
-    for a in "$@"; do [ "$a" = "--yes" ] && yes="--yes"; done
-    d=$(preflight) || exit 1
-    repatch
+    shift; ver=""; yes=""
+    for a in "$@"; do
+      case "$a" in
+        --yes) yes="--yes" ;;
+        -*) die "all: unknown option $a" ;;
+        *) ver="$a" ;;
+      esac
+    done
+    preflight >/dev/null || exit 1
     do_upgrade "$ver"
     if verify; then log "all: PASS"; else
       log "all: verify failed"
-      [ "$yes" = "--yes" ] && do_rollback || log "all: rerun with --yes to auto-rollback"
+      if [ "$yes" = "--yes" ]; then do_rollback; else log "all: rerun with --yes to auto-rollback"; fi
       exit 1
     fi ;;
   *) echo "usage: $0 --preflight|--repatch|--verify|--upgrade [ver]|--rollback [--dry-run]|--all [ver] [--yes]"; exit 2 ;;

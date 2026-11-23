@@ -53,7 +53,7 @@ bash ~/stability/scripts/upgrade.sh --preflight
 会做：
 1. 新建快照目录 `~/stability/upgrades/<时间戳>/`；
 2. 记录当前 **HA 版本 / Python 版本 / pip freeze**；
-3. 备份**补丁文件**（sitecustomize、fix_ha_android.py、patch_d9.py、patch_mobile_app.sh、shims32.py、midea_devices.py、mobile_app manifest）；
+3. 备份**补丁文件**（sitecustomize、HA `__main__.py`、midea_devices.py、mobile_app manifest；重打补丁用仓库脚本 `patch-android-platform.py`、`patch-midea-d9-default.py`、`patch-mobile-app-manifest.py`、`shims-32bit.py`、`stability/scripts/patch-d9-programs.py`）；
 4. 全量备份配置（tar，路径写入快照目录的 `backup.txt`）。
 
 ### 2.2 升级 + 重打补丁 + 验证（推荐一条命令）

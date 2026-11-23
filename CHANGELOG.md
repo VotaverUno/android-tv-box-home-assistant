@@ -1,5 +1,7 @@
 # Changelog
 
+> **English**: [CHANGELOG-EN.md](CHANGELOG-EN.md)
+
 ## v0.2.0 (2026-11-22)
 
 > 本版本合并了原计划的 v0.2.0（看门狗）与 v0.3.0（备份调度 / 升级 Runbook）。

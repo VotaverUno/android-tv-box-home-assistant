@@ -1,5 +1,7 @@
 # 升级与恢复 Runbook
 
+> **English**: [UpgradeRunbook-EN.md](UpgradeRunbook-EN.md)
+
 > 适用于这台盒子（32 位 armv7 + Termux + HA Core venv）。
 > 所有命令在盒子 Termux 里执行。**升级前必须先跑 preflight（会自动备份）。**
 

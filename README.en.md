@@ -54,11 +54,11 @@ with **Xiaoai** (小爱同学) through a Bemfa Cloud bridge.
 - 📘 Chinese step-by-step guide: [docs/教程-安卓盒子装HomeAssistant.md](docs/教程-安卓盒子装HomeAssistant.md)
 
 - 🏗 Architecture (English): [docs/Architecture-EN.md](docs/Architecture-EN.md)
-- 🧱 Tech stack (layers + rationale, Chinese): [docs/技术栈.md](docs/技术栈.md)
+- 🧱 Tech stack (layers + rationale): [docs/TechStack-EN.md](docs/TechStack-EN.md) (中文: [docs/技术栈.md](docs/技术栈.md))
 - 🏗 Architecture (Chinese): [docs/架构与数据流.md](docs/架构与数据流.md)
-- 🚑 Upgrade & recovery runbook (Chinese): [docs/升级与恢复Runbook.md](docs/升级与恢复Runbook.md)
-- 🧾 Box compatibility list: [docs/盒子型号适配表.md](docs/盒子型号适配表.md)
-- 📝 Changelog: [CHANGELOG.md](CHANGELOG.md)
+- 🚑 Upgrade & recovery runbook: [docs/UpgradeRunbook-EN.md](docs/UpgradeRunbook-EN.md) (中文: [docs/升级与恢复Runbook.md](docs/升级与恢复Runbook.md))
+- 🧾 Box compatibility list: [docs/BoxCompatibility-EN.md](docs/BoxCompatibility-EN.md) (中文: [docs/盒子型号适配表.md](docs/盒子型号适配表.md))
+- 📝 Changelog: [CHANGELOG-EN.md](CHANGELOG-EN.md) (中文: [CHANGELOG.md](CHANGELOG.md))
 - 🔒 Security policy: [SECURITY.md](SECURITY.md)
 - 🤝 Code of Conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) (中文: [zh-CN](CODE_OF_CONDUCT.zh-CN.md))
 

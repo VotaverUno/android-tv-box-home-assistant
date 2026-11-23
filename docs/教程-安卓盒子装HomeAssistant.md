@@ -131,6 +131,12 @@ pkg install -y python-cryptography python-bcrypt python-pillow \
   python-numpy python-grpcio python-psutil
 ```
 
+> **为什么这些要用 `pkg` 装、而不是 `pip`？**
+> `cryptography` / `bcrypt` / `pillow` / `numpy` / `grpcio` / `psutil` 都是**二进制扩展**（Rust/C）。
+> 在 32 位 armv7 上 `pip` 会尝试现场编译：慢、容易 OOM、经常直接失败。
+> Termux 提供了预编译包，先装好，venv 用 `--system-site-packages` 就能继承。
+> **`cryptography` 尤其没有纯 Python 替代品**——它不能像 orjson 那样用垫片绕过；没有它 HA 根本起不来。
+
 ### 4.2 32 位盒子：安装纯 Python 垫片
 
 HA 依赖的 `orjson / ulid-transform / fnv-hash-fast / uv` 在 32 位下没有预编译包，

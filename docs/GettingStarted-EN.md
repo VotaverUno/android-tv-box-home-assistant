@@ -130,6 +130,13 @@ pkg install -y python-cryptography python-bcrypt python-pillow \
   python-numpy python-grpcio python-psutil
 ```
 
+> **Why install these with `pkg` instead of `pip`?**
+> `cryptography` / `bcrypt` / `pillow` / `numpy` / `grpcio` / `psutil` are **binary extensions** (Rust/C).
+> On 32-bit armv7, `pip` tries to build them locally: slow, OOM-prone, often fails outright.
+> Termux ships prebuilt packages; install them first and let the venv inherit them via
+> `--system-site-packages`. **`cryptography` has no pure-Python replacement** — unlike orjson,
+> it cannot be shimmed, and without it Home Assistant will not start.
+
 ### 4.2 32-bit only: pure-Python shims
 
 HA requirements `orjson / ulid-transform / fnv-hash-fast / uv` have no armv7 wheels.
